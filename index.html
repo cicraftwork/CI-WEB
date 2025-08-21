@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda FEN Sustentabilidad | Universidad de Chile</title>
+    <title>Agenda FEN Sustentabilidad | Universidad de Chile - Gestión Avanzada</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Variables de color FEN - Basadas en manual de marca */
+        /* Variables de color FEN */
         :root {
             --fen-azul-principal: #1E3A8A;
             --fen-azul-secundario: #3B82F6;
@@ -15,6 +15,8 @@
             --fen-gris-claro: #F4F4F4;
             --fen-negro: #333333;
             --fen-rojo: #EF4338;
+            --fen-verde: #10B981;
+            --fen-amarillo: #F59E0B;
             --fen-blanco: #FFFFFF;
             --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
             --shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.15);
@@ -31,7 +33,7 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
             color: var(--fen-negro);
-            background: linear-gradient(135deg, var(--fen-azul-principal) 0%, var(--fen-azul-marino) 100%);
+            background: linear-gradient(135deg, var(--fen-azul-principal), var(--fen-azul-marino));
             min-height: 100vh;
         }
 
@@ -41,14 +43,13 @@
             padding: 20px;
         }
 
-        /* Header Institucional */
+        /* Header */
         .header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(15px);
             border-radius: 20px;
             padding: 40px;
             margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: var(--shadow-heavy);
             text-align: center;
         }
@@ -58,7 +59,6 @@
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 700;
             margin-bottom: 15px;
-            letter-spacing: -0.5px;
         }
 
         .header p {
@@ -177,7 +177,7 @@
         }
 
         .btn-success {
-            background: #10B981;
+            background: var(--fen-verde);
             color: white;
         }
 
@@ -186,7 +186,12 @@
             color: white;
         }
 
-        /* Estados de interfaz */
+        .btn-warning {
+            background: var(--fen-amarillo);
+            color: white;
+        }
+
+        /* Estados */
         .loading {
             text-align: center;
             padding: 60px 20px;
@@ -213,12 +218,6 @@
             border-radius: 15px;
             text-align: center;
             margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        .error i {
-            font-size: 2em;
-            margin-bottom: 15px;
         }
 
         /* Estadísticas */
@@ -236,7 +235,6 @@
             text-align: center;
             box-shadow: var(--shadow-medium);
             transition: transform 0.3s ease;
-            backdrop-filter: blur(10px);
         }
 
         .stat-card:hover {
@@ -272,7 +270,6 @@
             overflow: hidden;
             box-shadow: var(--shadow-medium);
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
         }
 
         .week-card:hover {
@@ -286,11 +283,6 @@
             padding: 30px;
             cursor: pointer;
             position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .week-header:hover {
-            background: linear-gradient(135deg, var(--fen-azul-marino), var(--fen-azul-principal));
         }
 
         .week-number {
@@ -306,14 +298,12 @@
             justify-content: center;
             font-weight: bold;
             font-size: 1.3em;
-            backdrop-filter: blur(10px);
         }
 
         .week-dates {
             font-size: 1.2em;
             font-weight: 600;
             margin-bottom: 10px;
-            letter-spacing: 0.5px;
         }
 
         .week-theme {
@@ -356,7 +346,7 @@
         }
 
         .week-content.expanded {
-            max-height: 3000px;
+            max-height: 5000px;
         }
 
         .content-container {
@@ -389,6 +379,11 @@
             color: var(--fen-azul-principal);
             margin-bottom: 10px;
             line-height: 1.4;
+            cursor: pointer;
+        }
+
+        .content-title:hover {
+            text-decoration: underline;
         }
 
         .content-type {
@@ -412,108 +407,175 @@
             margin-top: 15px;
             font-size: 0.8em;
             color: var(--fen-azul-secundario);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        /* Modo presentación */
-        .presentation-mode {
-            background: white;
+        .content-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
         }
 
-        .presentation-mode .toolbar {
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .estado-badge {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .estado-pendiente { background: #FEE2E2; color: #991B1B; }
+        .estado-en-progreso { background: #FEF3C7; color: #92400E; }
+        .estado-completado { background: #D1FAE5; color: #065F46; }
+        .estado-pausado { background: #E0E7FF; color: #3730A3; }
+        .estado-no-incluir { background: #F3F4F6; color: #374151; }
+        .estado-sin-estado { background: #F9FAFB; color: #6B7280; }
+
+        /* Modal */
+        .modal {
             display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
         }
 
-        .presentation-mode .content-item {
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
             background: white;
-            border: 1px solid var(--fen-gris-claro);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-heavy);
+            animation: modalSlide 0.3s ease-out;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
             }
-            
-            .header {
-                padding: 25px;
-            }
-            
-            .toolbar {
-                padding: 20px;
-            }
-            
-            .toolbar-row {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .search-container {
-                min-width: unset;
-            }
-            
-            .filter-group {
-                justify-content: center;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .week-header {
-                padding: 25px;
-            }
-            
-            .week-number {
-                width: 40px;
-                height: 40px;
-                font-size: 1.1em;
-                right: 20px;
-                top: 20px;
-            }
-            
-            .toggle-icon {
-                right: 70px;
-                font-size: 1.2em;
-            }
-            
-            .content-container {
-                padding: 20px;
-            }
-
-            .week-stats {
-                gap: 15px;
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
             }
         }
 
-        /* Animaciones */
-        .fade-in {
-            animation: fadeIn 0.6s ease-in;
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--fen-gris-claro);
         }
 
-        @keyframes fadeIn {
-            from { 
-                opacity: 0; 
-                transform: translateY(20px); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
+        .modal-title {
+            color: var(--fen-azul-principal);
+            font-size: 1.5em;
+            font-weight: 600;
         }
 
-        .slide-down {
-            animation: slideDown 0.3s ease-out;
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            color: var(--fen-negro);
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
         }
 
-        @keyframes slideDown {
-            from { 
-                transform: translateY(-10px); 
-                opacity: 0; 
-            }
-            to { 
-                transform: translateY(0); 
-                opacity: 1; 
-            }
+        .close-modal:hover {
+            background: var(--fen-gris-claro);
+        }
+
+        /* Formularios */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--fen-azul-principal);
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--fen-gris-claro);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--fen-azul-secundario);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .etiquetas-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .etiqueta-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            background: var(--fen-gris-claro);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .etiqueta-checkbox:hover {
+            background: var(--fen-azul-secundario);
+            color: white;
+        }
+
+        .etiqueta-checkbox input {
+            margin: 0;
+        }
+
+        .etiqueta-checkbox.active {
+            background: var(--fen-azul-principal);
+            color: white;
         }
 
         /* Notificaciones */
@@ -525,24 +587,44 @@
             border-radius: 10px;
             color: white;
             font-weight: 600;
-            z-index: 1000;
+            z-index: 1001;
             animation: slideDown 0.3s ease-out;
-            max-width: 300px;
+            max-width: 350px;
+            box-shadow: var(--shadow-medium);
         }
 
-        .notification.success {
-            background: #10B981;
+        .notification.success { background: var(--fen-verde); }
+        .notification.error { background: var(--fen-rojo); }
+        .notification.info { background: var(--fen-azul-secundario); }
+        .notification.warning { background: var(--fen-amarillo); color: var(--fen-negro); }
+
+        @keyframes slideDown {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
-        .notification.error {
-            background: var(--fen-rojo);
+        /* Modo presentación */
+        .presentation-mode {
+            background: white;
         }
 
-        .notification.info {
-            background: var(--fen-azul-secundario);
+        .presentation-mode .toolbar {
+            display: none;
         }
 
-        /* Export dropdown */
+        .presentation-mode .content-actions {
+            display: none;
+        }
+
+        .presentation-mode .content-title {
+            cursor: default;
+        }
+
+        .presentation-mode .content-title:hover {
+            text-decoration: none;
+        }
+
+        /* Dropdown para exportar */
         .export-menu {
             position: relative;
         }
@@ -583,35 +665,56 @@
             background: var(--fen-gris-claro);
         }
 
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .header { padding: 25px; }
+            .toolbar { padding: 20px; }
+            .toolbar-row { flex-direction: column; align-items: stretch; }
+            .search-container { min-width: unset; }
+            .filter-group { justify-content: center; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .week-header { padding: 25px; }
+            .week-number { width: 40px; height: 40px; font-size: 1.1em; right: 20px; top: 20px; }
+            .toggle-icon { right: 70px; font-size: 1.2em; }
+            .content-container { padding: 20px; }
+            .week-stats { gap: 15px; }
+            .modal-content { padding: 20px; }
+            .content-meta { flex-direction: column; align-items: flex-start; gap: 5px; }
+        }
+
         /* Utilidades */
-        .hidden {
-            display: none !important;
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .mb-20 { margin-bottom: 20px; }
+
+        /* Fade in animation */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
         }
 
-        .text-center {
-            text-align: center;
-        }
-
-        .mb-20 {
-            margin-bottom: 20px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header Institucional -->
+        <!-- Header -->
         <header class="header fade-in">
-            <h1 id="titulo">Cargando...</h1>
-            <p id="periodo">Preparando agenda de contenidos</p>
-            <div class="subtitle">Basada en APL II - Educación Superior Sustentable</div>
+            <h1 id="titulo">Agenda FEN Sustentabilidad</h1>
+            <p id="periodo">25 agosto - 19 octubre 2025</p>
+            <div class="subtitle">APL II - Educación Superior Sustentable - Gestión Avanzada</div>
         </header>
 
-        <!-- Estados de carga -->
+        <!-- Loading -->
         <div id="loading" class="loading">
             <i class="fas fa-calendar-alt"></i>
             <p>Cargando agenda de sustentabilidad...</p>
         </div>
 
+        <!-- Error -->
         <div id="error" class="error hidden">
             <i class="fas fa-exclamation-triangle"></i>
             <h3>Error al cargar la agenda</h3>
@@ -621,7 +724,7 @@
             </button>
         </div>
 
-        <!-- Barra de herramientas -->
+        <!-- Toolbar -->
         <div class="toolbar hidden" id="toolbar">
             <div class="toolbar-row">
                 <div class="search-container">
@@ -657,6 +760,10 @@
 
             <div class="toolbar-row">
                 <div class="filter-group">
+                    <button class="btn btn-success" id="addContentBtn">
+                        <i class="fas fa-plus"></i> Nuevo Contenido
+                    </button>
+
                     <button class="btn btn-secondary" id="clearFilters">
                         <i class="fas fa-filter"></i> Limpiar filtros
                     </button>
@@ -679,7 +786,7 @@
                         <i class="fas fa-tv"></i> Modo presentación
                     </button>
 
-                    <button class="btn btn-success" id="refreshBtn">
+                    <button class="btn btn-warning" id="refreshBtn">
                         <i class="fas fa-sync-alt"></i> Actualizar
                     </button>
                 </div>
@@ -688,24 +795,132 @@
 
         <!-- Estadísticas -->
         <div class="stats-grid hidden" id="statsGrid">
-            <!-- Se llena dinámicamente -->
+            <!-- Se llenan dinámicamente -->
         </div>
 
-        <!-- Contenedor de la agenda -->
+        <!-- Contenedor de agenda -->
         <div id="agendaContainer">
             <!-- Se llena dinámicamente -->
         </div>
     </div>
 
+    <!-- Modal para editar contenido -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Editar Contenido</h2>
+                <button class="close-modal" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="contentForm">
+                <input type="hidden" id="contentId">
+                
+                <div class="form-group">
+                    <label class="form-label" for="contentTitulo">Título del Contenido *</label>
+                    <input type="text" class="form-input" id="contentTitulo" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="contentTipo">Tipo de Desarrollo *</label>
+                    <input type="text" class="form-input" id="contentTipo" required 
+                           placeholder="Ej: Texto web + infografía, Documento síntesis, Video testimonial">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="contentRecursos">Recursos Necesarios</label>
+                    <textarea class="form-textarea" id="contentRecursos" 
+                              placeholder="Describe los recursos, materiales o información necesaria"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="contentEstado">Estado de Progreso</label>
+                    <select class="form-select" id="contentEstado">
+                        <option value="">Sin estado</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="en-progreso">En progreso</option>
+                        <option value="completado">Completado</option>
+                        <option value="pausado">Pausado</option>
+                        <option value="no-incluir">No incluir</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Pilares del APL (Etiquetas)</label>
+                    <div class="etiquetas-container">
+                        <label class="etiqueta-checkbox">
+                            <input type="checkbox" value="gobernanza"> Gobernanza y Seguimiento
+                        </label>
+                        <label class="etiqueta-checkbox">
+                            <input type="checkbox" value="cultura"> Cultura Sustentable
+                        </label>
+                        <label class="etiqueta-checkbox">
+                            <input type="checkbox" value="academia"> Academia
+                        </label>
+                        <label class="etiqueta-checkbox">
+                            <input type="checkbox" value="campus"> Gestión de Campus
+                        </label>
+                        <label class="etiqueta-checkbox">
+                            <input type="checkbox" value="vinculacion"> Vinculación con el Medio
+                        </label>
+                        <label class="etiqueta-checkbox">
+                            <input type="checkbox" value="responsabilidad"> Responsabilidad Social
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="contentComentarios">Comentarios Adicionales</label>
+                    <textarea class="form-textarea" id="contentComentarios" 
+                              placeholder="Notas, observaciones o información adicional"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="contentArchivos">Enlaces a Documentos</label>
+                    <input type="text" class="form-input" id="contentArchivos" 
+                           placeholder="URLs a documentos, políticas o recursos relacionados">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="contentSemana">Semana de Implementación</label>
+                    <select class="form-select" id="contentSemana" required>
+                        <option value="">Seleccionar semana</option>
+                        <option value="1">Semana 1 - GOBERNANZA Y SEGUIMIENTO Fundamentos</option>
+                        <option value="2">Semana 2 - GOBERNANZA Políticas + CULTURA SUSTENTABLE</option>
+                        <option value="3">Semana 3 - CULTURA SUSTENTABLE Programas + ACADEMIA</option>
+                        <option value="4">Semana 4 - CULTURA SUSTENTABLE Medición + ACADEMIA</option>
+                        <option value="5">Semana 5 - GESTIÓN CAMPUS Recursos Naturales</option>
+                        <option value="6">Semana 6 - GESTIÓN CAMPUS Residuos y Energía</option>
+                        <option value="7">Semana 7 - GESTIÓN CAMPUS Movilidad + VINCULACIÓN</option>
+                        <option value="8">Semana 8 - VINCULACIÓN CON EL MEDIO Consolidación</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 30px;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Guardar
+                    </button>
+                    <button type="button" class="btn btn-danger" id="deleteBtn" style="display: none;">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        // Configuración de la aplicación
+        // Configuración
         const CONFIG = {
             API_BASE: 'api.php',
-            AUTO_REFRESH: 30000, // 30 segundos
+            AUTO_REFRESH: 30000,
             ANIMATION_DELAY: 100
         };
 
-        // Estado global de la aplicación
+        // Estado global
         const AppState = {
             agenda: null,
             estadisticas: null,
@@ -716,10 +931,671 @@
                 semana: ''
             },
             modoPresentacion: false,
-            isLoading: false
+            isLoading: false,
+            editMode: false
         };
 
-        // Inicialización de la aplicación
+        // Datos completos de la agenda FEN según documentos
+        const AGENDA_COMPLETA = {
+            titulo: "Agenda de Contenidos FEN Sustentabilidad",
+            periodo: "25 agosto - 19 octubre 2025",
+            descripcion: "Agenda basada en APL II - Educación Superior Sustentable",
+            version: "3.0 - Edición Completa",
+            fechaCreacion: "2025-08-21T00:00:00Z",
+            fechaModificacion: new Date().toISOString(),
+            semanas: [
+                {
+                    numero: 1,
+                    fechas: "25-30 AGOSTO",
+                    tema: "GOBERNANZA Y SEGUIMIENTO - Fundamentos",
+                    descripcion: "Establecimiento de bases institucionales para la sustentabilidad",
+                    contenidos: [
+                        {
+                            id: "1-1",
+                            titulo: "Política institucional de sustentabilidad",
+                            tipo: "Texto web + infografía",
+                            recursos: "Política UChile existente, adaptación FEN",
+                            estado: "",
+                            etiquetas: ["gobernanza"],
+                            comentarios: "Base fundamental del sistema institucional",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "1-2",
+                            titulo: "Plan de sustentabilidad institucional FEN",
+                            tipo: "Documento síntesis + cronograma visual",
+                            recursos: "APL compromisos, botón descarga",
+                            estado: "",
+                            etiquetas: ["gobernanza"],
+                            comentarios: "Documento estratégico central",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "1-3",
+                            titulo: "Unidad de sustentabilidad FEN",
+                            tipo: "Bio del responsable + foto + organigrama",
+                            recursos: "Foto Fran + Decano + jefe de Gabinete?, descripción de funciones",
+                            estado: "",
+                            etiquetas: ["gobernanza"],
+                            comentarios: "Estructura organizacional clave",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "1-4",
+                            titulo: "Comité Local de Sustentabilidad",
+                            tipo: "Perfiles miembros + foto bio + foto grupal",
+                            recursos: "Composición triestamental, roles",
+                            estado: "",
+                            etiquetas: ["gobernanza"],
+                            comentarios: "Representación de todos los estamentos",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "1-5",
+                            titulo: "Memoria de sustentabilidad",
+                            tipo: "Resumen ejecutivo + PDF descargable",
+                            recursos: "Compilación logros, indicadores",
+                            estado: "",
+                            etiquetas: ["gobernanza"],
+                            comentarios: "Reporte anual de avances",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "1-6",
+                            titulo: "Política vinculación con el medio sustentable",
+                            tipo: "Adaptación política UChile a web FEN",
+                            recursos: "Política UChile + casos FEN",
+                            estado: "",
+                            etiquetas: ["gobernanza", "vinculacion"],
+                            comentarios: "Integración con territorio",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        }
+                    ]
+                },
+                {
+                    numero: 2,
+                    fechas: "1-6 SEPTIEMBRE",
+                    tema: "GOBERNANZA Políticas Transversales + CULTURA SUSTENTABLE",
+                    descripcion: "Desarrollo de políticas inclusivas y programas de formación",
+                    contenidos: [
+                        {
+                            id: "2-1",
+                            titulo: "Política inclusión y diversidad",
+                            tipo: "Adaptación política UChile a web FEN",
+                            recursos: "Definición U Chile",
+                            estado: "",
+                            etiquetas: ["gobernanza", "responsabilidad"],
+                            comentarios: "Compromiso institucional con la inclusión",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "2-2",
+                            titulo: "Unidad de inclusión y diversidad",
+                            tipo: "Descripción + recursos",
+                            recursos: "Vinculación Responsables FEN",
+                            estado: "",
+                            etiquetas: ["gobernanza", "responsabilidad"],
+                            comentarios: "Estructura operativa de inclusión",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "2-3",
+                            titulo: "Política género y diversidad sexual",
+                            tipo: "Adaptación política UChile a web FEN",
+                            recursos: "Política UChile + OGDIS",
+                            estado: "",
+                            etiquetas: ["gobernanza", "responsabilidad"],
+                            comentarios: "Enfoque de género institucional",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "2-4",
+                            titulo: "Unidad encargada género",
+                            tipo: "Descripción + recursos",
+                            recursos: "Vinculación OGDIS-FEN",
+                            estado: "",
+                            etiquetas: ["gobernanza", "responsabilidad"],
+                            comentarios: "Coordinación con OGDIS Universidad",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "2-5",
+                            titulo: "Programa inducción estudiantes",
+                            tipo: "Info + video testimonial",
+                            recursos: "Material inducción FEN existente",
+                            estado: "",
+                            etiquetas: ["cultura", "academia"],
+                            comentarios: "Formación inicial en sustentabilidad",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "2-6",
+                            titulo: "Capacitación personal no académico",
+                            tipo: "Galería fotos + testimonios",
+                            recursos: "Lista Docentes que participaron",
+                            estado: "",
+                            etiquetas: ["cultura"],
+                            comentarios: "Formación integral de funcionarios",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        }
+                    ]
+                },
+                {
+                    numero: 3,
+                    fechas: "8-13 SEPTIEMBRE",
+                    tema: "CULTURA SUSTENTABLE Programas y Participación + ACADEMIA",
+                    descripcion: "Implementación de programas de sensibilización y participación comunitaria",
+                    contenidos: [
+                        {
+                            id: "3-1",
+                            titulo: "Campañas sensibilización y estilos de vida",
+                            tipo: "Notas y fotos: RRHH + Escuelas",
+                            recursos: "Vinculación con Escuela y RRHH; información y fotos",
+                            estado: "",
+                            etiquetas: ["cultura"],
+                            comentarios: "Promoción de hábitos sustentables",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "3-2",
+                            titulo: "Instancias participación comunitaria",
+                            tipo: "Nota y fotos: Mercadito, Let's Lunch/Chat / charla inducción funcionarios",
+                            recursos: "Vinculación con Escuela y RRHH; información y fotos",
+                            estado: "",
+                            etiquetas: ["cultura", "vinculacion"],
+                            comentarios: "Espacios de encuentro y diálogo",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "3-3",
+                            titulo: "Programa buenas prácticas en oficinas a nivel institucional",
+                            tipo: "Texto e imagenes: Programa oficina sustentable + link \"Súmate\"",
+                            recursos: "Material programa existente y formulario (?)",
+                            estado: "",
+                            etiquetas: ["cultura", "campus"],
+                            comentarios: "Transformación de espacios de trabajo",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "3-4",
+                            titulo: "Encuesta cultura sustentabilidad",
+                            tipo: "Texto informativo, Resultados + gráficos",
+                            recursos: "Datos encuesta voluntaria anual",
+                            estado: "",
+                            etiquetas: ["cultura", "gobernanza"],
+                            comentarios: "Medición de percepción y hábitos",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "3-5",
+                            titulo: "Curso electivo introductorio de sustentabilidad",
+                            tipo: "PENDIENTE",
+                            recursos: "Revisión contenido actual",
+                            estado: "pendiente",
+                            etiquetas: ["academia"],
+                            comentarios: "Formación curricular transversal",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        }
+                    ]
+                },
+                {
+                    numero: 4,
+                    fechas: "15-20 SEPTIEMBRE",
+                    tema: "CULTURA SUSTENTABLE Medición + ACADEMIA",
+                    descripcion: "Celebraciones sustentables y desarrollo académico en sustentabilidad",
+                    contenidos: [
+                        {
+                            id: "4-1",
+                            titulo: "Fiestas Patrias Sustentables",
+                            tipo: "Contenido especial + fotos",
+                            recursos: "Celebraciones FEN Sostenibles",
+                            estado: "",
+                            etiquetas: ["cultura"],
+                            comentarios: "Celebración con enfoque ambiental",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "4-2",
+                            titulo: "Programa formación académicos",
+                            tipo: "Foto + Frase docente",
+                            recursos: "Lista Docentes que han realizado el curso",
+                            estado: "",
+                            etiquetas: ["academia"],
+                            comentarios: "Capacitación del cuerpo docente",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "4-3",
+                            titulo: "Definición investigación sustentable",
+                            tipo: "Marco conceptual UChile-FEN",
+                            recursos: "Adaptación definición UChile",
+                            estado: "",
+                            etiquetas: ["academia"],
+                            comentarios: "Marco teórico institucional",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "4-4",
+                            titulo: "Fondo concursable investigación",
+                            tipo: "Bases + convocatoria",
+                            recursos: "Vinculación fondos UChile",
+                            estado: "",
+                            etiquetas: ["academia"],
+                            comentarios: "Financiamiento para investigación",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "4-5",
+                            titulo: "Difusión científica y transferencia",
+                            tipo: "Catálogo proyectos FEN",
+                            recursos: "Investigaciones sustentables",
+                            estado: "",
+                            etiquetas: ["academia", "vinculacion"],
+                            comentarios: "Socialización del conocimiento",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        }
+                    ]
+                },
+                {
+                    numero: 5,
+                    fechas: "22-27 SEPTIEMBRE",
+                    tema: "GESTIÓN CAMPUS Recursos Naturales",
+                    descripcion: "Manejo sostenible de biodiversidad, agua y recursos naturales del campus",
+                    contenidos: [
+                        {
+                            id: "5-1",
+                            titulo: "Inventario biodiversidad",
+                            tipo: "Catálogo verde FEN + fotos",
+                            recursos: "Especies campus, jardines",
+                            estado: "",
+                            etiquetas: ["campus"],
+                            comentarios: "Catastro flora y fauna campus",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "5-2",
+                            titulo: "Programa cuidado biodiversidad",
+                            tipo: "Plan implementación",
+                            recursos: "Mantenimiento áreas verdes",
+                            estado: "",
+                            etiquetas: ["campus"],
+                            comentarios: "Conservación activa de ecosistemas",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "5-3",
+                            titulo: "Diagnóstico gestión agua",
+                            tipo: "Informe + metas",
+                            recursos: "Línea base institucional",
+                            estado: "",
+                            etiquetas: ["campus"],
+                            comentarios: "Análisis consumo y eficiencia",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "5-4",
+                            titulo: "Registro consumo agua",
+                            tipo: "Dashboard + indicadores",
+                            recursos: "Datos mensuales",
+                            estado: "",
+                            etiquetas: ["campus"],
+                            comentarios: "Monitoreo continuo de uso",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "5-5",
+                            titulo: "Plan gestión agua",
+                            tipo: "Estrategia + cronograma",
+                            recursos: "Medidas eficiencia",
+                            estado: "",
+                            etiquetas: ["campus"],
+                            comentarios: "Estrategia integral del recurso",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "5-6",
+                            titulo: "Diagnóstico residuos",
+                            tipo: "Clasificación + flujos",
+                            recursos: "Info Residuos",
+                            estado: "",
+                            etiquetas: ["campus"],
+                            comentarios: "Caracterización de desechos",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        }
+                    ]
+                },
+                {
+                    numero: 6,
+                    fechas: "29 SEP - 4 OCTUBRE",
+                    tema: "GESTIÓN CAMPUS Residuos y Energía",
+                    descripcion: "Implementación de sistemas de gestión de residuos y eficiencia energética",
+                    contenidos: [
+                        {
+                            id: "6-1",
+                            titulo: "Plan gestión residuos",
+                            tipo: "Estrategia integral",
+                            recursos: "Valorización y eliminación",
+                            estado: "",
+                            etiquetas: ["campus"],
+                            comentarios: "Manejo sustentable de desechos",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "6-2",
+                            titulo: "Programa consumo responsable",
+                            tipo: "Guía + metas",
+                            recursos: "Reducción, reciclaje",
+                            estado: "",
+                            etiquetas: ["campus", "cultura"],
+                            comentarios: "Cambio de hábitos de consumo",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "6-3",
+                            titulo: "Compras sustentables",
+                            tipo: "Lineamientos + criterios",
+                            recursos: "información Licitaciones sobre criterios sustentables",
+                            estado: "",
+                            etiquetas: ["campus", "gobernanza"],
+                            comentarios: "Adquisiciones con criterios ambientales",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "6-4",
+                            titulo: "Diagnóstico energético",
+                            tipo: "Línea base + oportunidades",
+                            recursos: "Usos significativos energía",
+                            estado: "",
+                            etiquetas: ["campus"],
+                            comentarios: "Análisis consumo energético",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "6-5",
+                            titulo: "Plan gestión energía",
+                            tipo: "Estrategia + cronograma",
+                            recursos: "info de Eficiencia energética",
+                            estado: "",
+                            etiquetas: ["campus"],
+                            comentarios: "Optimización uso energético",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "6-6",
+                            titulo: "Diagnóstico movilidad",
+                            tipo: "Patrones comunidad",
+                            recursos: "Encuesta origen-destino",
+                            estado: "",
+                            etiquetas: ["campus"],
+                            comentarios: "Análisis patrones de transporte",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        }
+                    ]
+                },
+                {
+                    numero: 7,
+                    fechas: "6-11 OCTUBRE",
+                    tema: "GESTIÓN CAMPUS Movilidad y Carbono + VINCULACIÓN CON EL MEDIO Y RESPONSABILIDAD SOCIAL",
+                    descripcion: "Infraestructura sustentable y programas de vinculación territorial",
+                    contenidos: [
+                        {
+                            id: "7-1",
+                            titulo: "Plan movilidad + bicicleteros",
+                            tipo: "texto + fotos Infraestructura sustentable",
+                            recursos: "Info disponible",
+                            estado: "",
+                            etiquetas: ["campus"],
+                            comentarios: "Transporte sustentable campus",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "7-2",
+                            titulo: "Huella carbono + neutralidad",
+                            tipo: "Medición + plan reducción",
+                            recursos: "HuellaChile, verificación",
+                            estado: "",
+                            etiquetas: ["campus"],
+                            comentarios: "Compromiso carbono neutralidad",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "7-3",
+                            titulo: "Plan inclusión y diversidad",
+                            tipo: "Estrategia RRHH + estudiantes",
+                            recursos: "info de Colaboradores y escuelas",
+                            estado: "",
+                            etiquetas: ["responsabilidad"],
+                            comentarios: "Integración de toda la comunidad",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "7-4",
+                            titulo: "Programa apoyo permanencia estudiantes",
+                            tipo: "Información",
+                            recursos: "Coordinación con Escuelas",
+                            estado: "",
+                            etiquetas: ["responsabilidad"],
+                            comentarios: "Retención y éxito estudiantil",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "7-5",
+                            titulo: "Plan vinculación con el medio sustentable",
+                            tipo: "Programas territorio",
+                            recursos: "Criterios sustentabilidad",
+                            estado: "",
+                            etiquetas: ["vinculacion"],
+                            comentarios: "Impacto territorial positivo",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "7-6",
+                            titulo: "Plan género y diversidad sexual",
+                            tipo: "Info (breve texto + link)",
+                            recursos: "Vinculación OGDIS",
+                            estado: "",
+                            etiquetas: ["responsabilidad"],
+                            comentarios: "Enfoque de género transversal",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        }
+                    ]
+                },
+                {
+                    numero: 8,
+                    fechas: "13-19 OCTUBRE",
+                    tema: "VINCULACIÓN CON EL MEDIO - Consolidación",
+                    descripcion: "Consolidación final y verificación de compromisos del APL",
+                    contenidos: [
+                        {
+                            id: "8-1",
+                            titulo: "Sello Impacta Sustentable",
+                            tipo: "Nota + fotos",
+                            recursos: "material gráfico e información",
+                            estado: "",
+                            etiquetas: ["vinculacion"],
+                            comentarios: "Reconocimiento de impacto",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "8-2",
+                            titulo: "90 años, 90 árboles",
+                            tipo: "Nota + fotos",
+                            recursos: "material gráfico e información",
+                            estado: "",
+                            etiquetas: ["vinculacion", "campus"],
+                            comentarios: "Proyecto aniversario sustentable",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "8-3",
+                            titulo: "Catastro instalaciones residuos",
+                            tipo: "Mapeo (gráfica?) valorización/eliminación",
+                            recursos: "Coordinación con responsables",
+                            estado: "",
+                            etiquetas: ["campus"],
+                            comentarios: "Infraestructura de gestión",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "8-4",
+                            titulo: "Implementación oficinas sustentables",
+                            tipo: "Registro 15% oficinas",
+                            recursos: "Programa \"Súmate\" expandido",
+                            estado: "",
+                            etiquetas: ["cultura", "campus"],
+                            comentarios: "Meta de transformación espacios",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "8-5",
+                            titulo: "Verificación huella carbono",
+                            tipo: "Proceso HuellaChile",
+                            recursos: "Verificadores certificados",
+                            estado: "",
+                            etiquetas: ["campus"],
+                            comentarios: "Validación externa de medición",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "8-6",
+                            titulo: "Reporte indicadores sustentabilidad",
+                            tipo: "RESIES actualizado",
+                            recursos: "Plataforma Red Campus",
+                            estado: "",
+                            etiquetas: ["gobernanza"],
+                            comentarios: "Reporte integral de cumplimiento",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        },
+                        {
+                            id: "8-7",
+                            titulo: "Consolidación web sustentabilidad",
+                            tipo: "Lanzamiento renovado",
+                            recursos: "Todos los contenidos integrados",
+                            estado: "",
+                            etiquetas: ["gobernanza", "cultura"],
+                            comentarios: "Plataforma digital unificada",
+                            archivos: "",
+                            fechaCreacion: "2025-08-21T00:00:00Z",
+                            fechaModificacion: "2025-08-21T00:00:00Z"
+                        }
+                    ]
+                }
+            ],
+            metadatos: {
+                totalSemanas: 8,
+                totalContenidos: 47,
+                baseAPL: "APL II - Educación Superior Sustentable",
+                pilares: [
+                    "Gobernanza y Seguimiento",
+                    "Cultura Sustentable", 
+                    "Academia",
+                    "Gestión de Campus",
+                    "Vinculación con el Medio",
+                    "Responsabilidad Social"
+                ],
+                estados: [
+                    "pendiente",
+                    "en-progreso", 
+                    "completado",
+                    "pausado",
+                    "no-incluir"
+                ]
+            }
+        };
+
+        // Inicialización
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
         });
@@ -729,7 +1605,6 @@
             await cargarDatos();
         }
 
-        // Configuración de event listeners
         function setupEventListeners() {
             // Filtros
             document.getElementById('searchInput').addEventListener('input', debounce(aplicarFiltros, 300));
@@ -737,7 +1612,8 @@
             document.getElementById('pilarFilter').addEventListener('change', aplicarFiltros);
             document.getElementById('semanaFilter').addEventListener('change', aplicarFiltros);
             
-            // Botones principales
+            // Botones
+            document.getElementById('addContentBtn').addEventListener('click', () => openModal());
             document.getElementById('clearFilters').addEventListener('click', limpiarFiltros);
             document.getElementById('refreshBtn').addEventListener('click', () => cargarDatos(true));
             document.getElementById('presentationMode').addEventListener('click', togglePresentationMode);
@@ -747,14 +1623,12 @@
                 document.getElementById('exportDropdown').classList.toggle('active');
             });
 
-            // Cerrar dropdown al hacer click fuera
             document.addEventListener('click', function(e) {
                 if (!e.target.closest('.export-menu')) {
                     document.getElementById('exportDropdown').classList.remove('active');
                 }
             });
 
-            // Opciones de exportación
             document.querySelectorAll('.export-option').forEach(option => {
                 option.addEventListener('click', function() {
                     const format = this.dataset.format;
@@ -762,9 +1636,21 @@
                     document.getElementById('exportDropdown').classList.remove('active');
                 });
             });
+
+            // Formulario
+            document.getElementById('contentForm').addEventListener('submit', handleFormSubmit);
+            document.getElementById('deleteBtn').addEventListener('click', handleDelete);
+
+            // Etiquetas
+            document.querySelectorAll('.etiqueta-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('click', function() {
+                    const input = this.querySelector('input');
+                    input.checked = !input.checked;
+                    this.classList.toggle('active', input.checked);
+                });
+            });
         }
 
-        // Carga de datos desde la API
         async function cargarDatos(forzarRecarga = false) {
             if (AppState.isLoading && !forzarRecarga) return;
             
@@ -772,25 +1658,10 @@
             mostrarLoading();
 
             try {
-                // Cargar agenda
-                const agendaResponse = await fetch(`${CONFIG.API_BASE}?action=agenda&t=${Date.now()}`);
-                if (!agendaResponse.ok) throw new Error('Error al cargar la agenda');
-                
-                const agendaData = await agendaResponse.json();
-                if (!agendaData.success) throw new Error(agendaData.mensaje || 'Error desconocido');
-                
-                AppState.agenda = agendaData.data;
+                // Usar datos completos internos en lugar de API
+                AppState.agenda = AGENDA_COMPLETA;
+                AppState.estadisticas = calcularEstadisticasLocales(AGENDA_COMPLETA);
 
-                // Cargar estadísticas
-                const statsResponse = await fetch(`${CONFIG.API_BASE}?action=estadisticas&t=${Date.now()}`);
-                if (statsResponse.ok) {
-                    const statsData = await statsResponse.json();
-                    if (statsData.success) {
-                        AppState.estadisticas = statsData.data;
-                    }
-                }
-
-                // Renderizar contenido
                 renderizarHeader();
                 renderizarEstadisticas();
                 renderizarAgenda();
@@ -807,7 +1678,66 @@
             }
         }
 
-        // Renderizado del header
+        function calcularEstadisticasLocales(agenda) {
+            const totalSemanas = agenda.semanas.length;
+            let totalContenidos = 0;
+            const estadosCont = {
+                'pendiente': 0,
+                'en-progreso': 0,
+                'completado': 0,
+                'pausado': 0,
+                'no-incluir': 0,
+                'sin-estado': 0
+            };
+            const pilaresCont = {
+                'gobernanza': 0,
+                'cultura': 0,
+                'academia': 0,
+                'campus': 0,
+                'vinculacion': 0,
+                'responsabilidad': 0,
+                'sin-etiqueta': 0
+            };
+
+            agenda.semanas.forEach(semana => {
+                totalContenidos += semana.contenidos.length;
+                
+                semana.contenidos.forEach(contenido => {
+                    const estado = contenido.estado || '';
+                    if (estado === '') {
+                        estadosCont['sin-estado']++;
+                    } else {
+                        estadosCont[estado] = (estadosCont[estado] || 0) + 1;
+                    }
+
+                    const etiquetas = contenido.etiquetas || [];
+                    if (etiquetas.length === 0) {
+                        pilaresCont['sin-etiqueta']++;
+                    } else {
+                        etiquetas.forEach(etiqueta => {
+                            pilaresCont[etiqueta] = (pilaresCont[etiqueta] || 0) + 1;
+                        });
+                    }
+                });
+            });
+
+            const porcentajeCompletado = totalContenidos > 0 ? 
+                Math.round((estadosCont['completado'] / totalContenidos) * 100) : 0;
+
+            return {
+                total_semanas: totalSemanas,
+                total_contenidos: totalContenidos,
+                promedio_contenidos_semana: totalSemanas > 0 ? 
+                    Math.round((totalContenidos / totalSemanas) * 10) / 10 : 0,
+                distribucion_estados: estadosCont,
+                distribucion_pilares: pilaresCont,
+                porcentaje_completado: porcentajeCompletado,
+                contenidos_completados: estadosCont['completado'],
+                contenidos_en_progreso: estadosCont['en-progreso'],
+                fecha_calculo: new Date().toLocaleString('es-CL')
+            };
+        }
+
         function renderizarHeader() {
             if (!AppState.agenda) return;
             
@@ -815,7 +1745,6 @@
             document.getElementById('periodo').textContent = AppState.agenda.periodo;
         }
 
-        // Renderizado de estadísticas
         function renderizarEstadisticas() {
             if (!AppState.estadisticas) return;
 
@@ -846,7 +1775,6 @@
             `;
         }
 
-        // Renderizado de la agenda
         function renderizarAgenda() {
             if (!AppState.agenda) return;
 
@@ -869,11 +1797,9 @@
                 container.appendChild(semanaElement);
             });
 
-            // Aplicar filtros si existen
             aplicarFiltros();
         }
 
-        // Crear tarjeta de semana
         function crearTarjetaSemana(semana, index) {
             const semanaDiv = document.createElement('div');
             semanaDiv.className = 'week-card fade-in';
@@ -905,7 +1831,7 @@
                 <div class="week-content" id="week-content-${semana.numero}">
                     <div class="content-container">
                         <div class="content-grid">
-                            ${semana.contenidos.map(contenido => crearTarjetaContenido(contenido)).join('')}
+                            ${semana.contenidos.map(contenido => crearTarjetaContenido(contenido, semana.numero)).join('')}
                         </div>
                     </div>
                 </div>
@@ -914,33 +1840,215 @@
             return semanaDiv;
         }
 
-        // Crear tarjeta de contenido
-        function crearTarjetaContenido(contenido) {
+        function crearTarjetaContenido(contenido, numeroSemana) {
+            const estadoBadge = contenido.estado ? 
+                `<span class="estado-badge estado-${contenido.estado}">${contenido.estado}</span>` : 
+                '<span class="estado-badge estado-sin-estado">sin estado</span>';
+
+            const etiquetasText = contenido.etiquetas && contenido.etiquetas.length > 0 ? 
+                contenido.etiquetas.join(', ') : 'Sin etiquetas';
+
             return `
-                <div class="content-item" data-id="${contenido.id}" data-titulo="${contenido.titulo.toLowerCase()}" data-tipo="${contenido.tipo.toLowerCase()}" data-recursos="${contenido.recursos.toLowerCase()}" data-estado="${contenido.estado || ''}" data-etiquetas="${(contenido.etiquetas || []).join(' ')}">
-                    <div class="content-title">${contenido.titulo}</div>
+                <div class="content-item" data-id="${contenido.id}" data-titulo="${contenido.titulo.toLowerCase()}" 
+                     data-tipo="${contenido.tipo.toLowerCase()}" data-recursos="${contenido.recursos.toLowerCase()}" 
+                     data-estado="${contenido.estado || ''}" data-etiquetas="${(contenido.etiquetas || []).join(' ')}"
+                     data-semana="${numeroSemana}">
+                    <div class="content-title" onclick="openModal('${contenido.id}')">${contenido.titulo}</div>
                     <div class="content-type">
                         <i class="fas fa-cog"></i> ${contenido.tipo}
                     </div>
                     <div class="content-resources">
                         <i class="fas fa-box"></i> ${contenido.recursos}
                     </div>
+                    ${contenido.comentarios ? `
+                        <div class="content-resources">
+                            <i class="fas fa-comment"></i> ${contenido.comentarios}
+                        </div>
+                    ` : ''}
                     <div class="content-meta">
                         <span>
                             <i class="fas fa-tag"></i> ID: ${contenido.id}
                         </span>
-                        ${contenido.fechaModificacion ? `
-                            <span>
-                                <i class="fas fa-clock"></i> 
-                                ${new Date(contenido.fechaModificacion).toLocaleDateString('es-CL')}
-                            </span>
-                        ` : ''}
+                        <span>
+                            <i class="fas fa-tags"></i> ${etiquetasText}
+                        </span>
+                        ${estadoBadge}
                     </div>
+                    ${!AppState.modoPresentacion ? `
+                        <div class="content-actions">
+                            <button class="btn-small btn-primary" onclick="openModal('${contenido.id}')">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn-small btn-danger" onclick="eliminarContenido('${contenido.id}')">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </button>
+                        </div>
+                    ` : ''}
                 </div>
             `;
         }
 
-        // Toggle de semana
+        function openModal(contenidoId = null) {
+            const modal = document.getElementById('editModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const deleteBtn = document.getElementById('deleteBtn');
+            
+            if (contenidoId) {
+                // Editar contenido existente
+                const contenido = buscarContenidoPorId(contenidoId);
+                if (!contenido) {
+                    mostrarNotificacion('Contenido no encontrado', 'error');
+                    return;
+                }
+                
+                modalTitle.textContent = 'Editar Contenido';
+                deleteBtn.style.display = 'block';
+                llenarFormulario(contenido);
+            } else {
+                // Nuevo contenido
+                modalTitle.textContent = 'Nuevo Contenido';
+                deleteBtn.style.display = 'none';
+                limpiarFormulario();
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('editModal').classList.remove('active');
+        }
+
+        function buscarContenidoPorId(id) {
+            for (const semana of AppState.agenda.semanas) {
+                for (const contenido of semana.contenidos) {
+                    if (contenido.id === id) {
+                        return { ...contenido, semana: semana.numero };
+                    }
+                }
+            }
+            return null;
+        }
+
+        function llenarFormulario(contenido) {
+            document.getElementById('contentId').value = contenido.id;
+            document.getElementById('contentTitulo').value = contenido.titulo || '';
+            document.getElementById('contentTipo').value = contenido.tipo || '';
+            document.getElementById('contentRecursos').value = contenido.recursos || '';
+            document.getElementById('contentEstado').value = contenido.estado || '';
+            document.getElementById('contentComentarios').value = contenido.comentarios || '';
+            document.getElementById('contentArchivos').value = contenido.archivos || '';
+            document.getElementById('contentSemana').value = contenido.semana || '';
+
+            // Etiquetas
+            document.querySelectorAll('.etiqueta-checkbox input').forEach(input => {
+                const isChecked = contenido.etiquetas && contenido.etiquetas.includes(input.value);
+                input.checked = isChecked;
+                input.closest('.etiqueta-checkbox').classList.toggle('active', isChecked);
+            });
+        }
+
+        function limpiarFormulario() {
+            document.getElementById('contentForm').reset();
+            document.getElementById('contentId').value = '';
+            document.querySelectorAll('.etiqueta-checkbox').forEach(checkbox => {
+                checkbox.classList.remove('active');
+                checkbox.querySelector('input').checked = false;
+            });
+        }
+
+        function recopilarEtiquetas() {
+            const etiquetas = [];
+            document.querySelectorAll('.etiqueta-checkbox input:checked').forEach(input => {
+                etiquetas.push(input.value);
+            });
+            return etiquetas;
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const contenidoId = document.getElementById('contentId').value;
+            const semanaNumero = parseInt(document.getElementById('contentSemana').value);
+            
+            const contenidoData = {
+                id: contenidoId || generarNuevoId(semanaNumero),
+                titulo: document.getElementById('contentTitulo').value,
+                tipo: document.getElementById('contentTipo').value,
+                recursos: document.getElementById('contentRecursos').value,
+                estado: document.getElementById('contentEstado').value,
+                etiquetas: recopilarEtiquetas(),
+                comentarios: document.getElementById('contentComentarios').value,
+                archivos: document.getElementById('contentArchivos').value,
+                fechaModificacion: new Date().toISOString()
+            };
+
+            if (!contenidoId) {
+                contenidoData.fechaCreacion = new Date().toISOString();
+            }
+
+            try {
+                if (contenidoId) {
+                    await actualizarContenido(contenidoData);
+                } else {
+                    await crearContenido(contenidoData, semanaNumero);
+                }
+                
+                closeModal();
+                renderizarAgenda();
+                renderizarEstadisticas();
+                mostrarNotificacion(contenidoId ? 'Contenido actualizado' : 'Contenido creado', 'success');
+            } catch (error) {
+                console.error('Error al guardar:', error);
+                mostrarNotificacion('Error al guardar el contenido', 'error');
+            }
+        }
+
+        function generarNuevoId(semanaNumero) {
+            const timestamp = Date.now();
+            const random = Math.floor(Math.random() * 100);
+            return `${semanaNumero}-${timestamp}-${random}`;
+        }
+
+        async function crearContenido(contenido, semanaNumero) {
+            const semana = AppState.agenda.semanas.find(s => s.numero === semanaNumero);
+            if (semana) {
+                semana.contenidos.push(contenido);
+            }
+        }
+
+        async function actualizarContenido(contenidoActualizado) {
+            for (const semana of AppState.agenda.semanas) {
+                const index = semana.contenidos.findIndex(c => c.id === contenidoActualizado.id);
+                if (index !== -1) {
+                    semana.contenidos[index] = { ...semana.contenidos[index], ...contenidoActualizado };
+                    break;
+                }
+            }
+        }
+
+        async function eliminarContenido(contenidoId) {
+            if (!confirm('¿Estás seguro de que quieres eliminar este contenido?')) return;
+
+            for (const semana of AppState.agenda.semanas) {
+                const index = semana.contenidos.findIndex(c => c.id === contenidoId);
+                if (index !== -1) {
+                    semana.contenidos.splice(index, 1);
+                    renderizarAgenda();
+                    renderizarEstadisticas();
+                    mostrarNotificacion('Contenido eliminado', 'success');
+                    return;
+                }
+            }
+        }
+
+        async function handleDelete() {
+            const contenidoId = document.getElementById('contentId').value;
+            if (contenidoId) {
+                closeModal();
+                await eliminarContenido(contenidoId);
+            }
+        }
+
         function toggleSemana(numeroSemana) {
             const content = document.getElementById(`week-content-${numeroSemana}`);
             const icon = document.getElementById(`toggle-${numeroSemana}`);
@@ -949,15 +2057,12 @@
             icon.classList.toggle('rotated');
         }
 
-        // Aplicar filtros
         function aplicarFiltros() {
-            // Obtener valores de filtros
             AppState.filtros.busqueda = document.getElementById('searchInput').value.toLowerCase();
             AppState.filtros.estado = document.getElementById('estadoFilter').value;
             AppState.filtros.pilar = document.getElementById('pilarFilter').value;
             AppState.filtros.semana = document.getElementById('semanaFilter').value;
 
-            // Filtrar contenidos
             const contenidos = document.querySelectorAll('.content-item');
             let visiblesCount = 0;
 
@@ -1001,11 +2106,9 @@
                 }
             });
 
-            // Mostrar mensaje si no hay resultados
             mostrarMensajeFiltros(visiblesCount);
         }
 
-        // Mostrar mensaje de filtros
         function mostrarMensajeFiltros(count) {
             const container = document.getElementById('agendaContainer');
             let mensaje = container.querySelector('.filter-message');
@@ -1024,7 +2127,6 @@
             }
         }
 
-        // Limpiar filtros
         function limpiarFiltros() {
             document.getElementById('searchInput').value = '';
             document.getElementById('estadoFilter').value = '';
@@ -1042,7 +2144,6 @@
             mostrarNotificacion('Filtros limpiados', 'info');
         }
 
-        // Toggle modo presentación
         function togglePresentationMode() {
             AppState.modoPresentacion = !AppState.modoPresentacion;
             document.body.classList.toggle('presentation-mode');
@@ -1051,19 +2152,32 @@
             btn.innerHTML = AppState.modoPresentacion ? 
                 '<i class="fas fa-edit"></i> Modo edición' : 
                 '<i class="fas fa-tv"></i> Modo presentación';
+                
+            renderizarAgenda(); // Re-renderizar para mostrar/ocultar botones
         }
 
-        // Exportar datos
         async function exportarDatos(formato) {
             try {
-                const url = `${CONFIG.API_BASE}?action=exportar&formato=${formato}&t=${Date.now()}`;
+                let dataStr;
+                let filename;
                 
-                // Crear link temporal para descarga
+                if (formato === 'json') {
+                    dataStr = JSON.stringify(AppState.agenda, null, 2);
+                    filename = `agenda-fen-${new Date().toISOString().split('T')[0]}.json`;
+                } else if (formato === 'csv') {
+                    dataStr = convertirACSV(AppState.agenda);
+                    filename = `agenda-fen-${new Date().toISOString().split('T')[0]}.csv`;
+                }
+                
+                const blob = new Blob([dataStr], {type: formato === 'json' ? 'application/json' : 'text/csv'});
+                const url = URL.createObjectURL(blob);
+                
                 const link = document.createElement('a');
                 link.href = url;
-                link.download = `agenda-fen-${new Date().toISOString().split('T')[0]}.${formato}`;
+                link.download = filename;
                 link.click();
                 
+                URL.revokeObjectURL(url);
                 mostrarNotificacion(`Exportando en formato ${formato.toUpperCase()}`, 'info');
             } catch (error) {
                 console.error('Error al exportar:', error);
@@ -1071,7 +2185,39 @@
             }
         }
 
-        // Calcular estadísticas de semana
+        function convertirACSV(agenda) {
+            const headers = [
+                'Semana', 'Fechas', 'Tema', 'ID Contenido', 'Título', 'Tipo', 
+                'Recursos', 'Estado', 'Etiquetas', 'Comentarios', 'Archivos', 
+                'Fecha Creación', 'Fecha Modificación'
+            ];
+            
+            let csv = headers.join(',') + '\n';
+            
+            agenda.semanas.forEach(semana => {
+                semana.contenidos.forEach(contenido => {
+                    const row = [
+                        semana.numero,
+                        `"${semana.fechas}"`,
+                        `"${semana.tema}"`,
+                        contenido.id,
+                        `"${contenido.titulo || ''}"`,
+                        `"${contenido.tipo || ''}"`,
+                        `"${contenido.recursos || ''}"`,
+                        contenido.estado || '',
+                        `"${(contenido.etiquetas || []).join(';')}"`,
+                        `"${contenido.comentarios || ''}"`,
+                        `"${contenido.archivos || ''}"`,
+                        contenido.fechaCreacion || '',
+                        contenido.fechaModificacion || ''
+                    ];
+                    csv += row.join(',') + '\n';
+                });
+            });
+            
+            return csv;
+        }
+
         function calcularEstadisticasSemana(semana) {
             let completados = 0;
             let enProgreso = 0;
@@ -1108,7 +2254,10 @@
         function mostrarNotificacion(mensaje, tipo = 'info') {
             const notification = document.createElement('div');
             notification.className = `notification ${tipo}`;
-            notification.textContent = mensaje;
+            notification.innerHTML = `
+                <i class="fas fa-${tipo === 'success' ? 'check-circle' : tipo === 'error' ? 'exclamation-circle' : tipo === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                ${mensaje}
+            `;
             
             document.body.appendChild(notification);
             
@@ -1129,14 +2278,346 @@
             };
         }
 
-        // Auto-refresh (opcional)
-        if (CONFIG.AUTO_REFRESH > 0) {
-            setInterval(() => {
-                if (!AppState.isLoading && !AppState.modoPresentacion) {
-                    cargarDatos();
-                }
-            }, CONFIG.AUTO_REFRESH);
+        // Cerrar modal con ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Cerrar modal al hacer click fuera
+        document.getElementById('editModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Auto-guardar en localStorage como backup
+        function guardarBackup() {
+            try {
+                localStorage.setItem('agenda_fen_backup', JSON.stringify({
+                    data: AppState.agenda,
+                    timestamp: new Date().toISOString()
+                }));
+            } catch (error) {
+                console.warn('No se pudo guardar backup en localStorage:', error);
+            }
         }
+
+        function cargarBackup() {
+            try {
+                const backup = localStorage.getItem('agenda_fen_backup');
+                if (backup) {
+                    const parsed = JSON.parse(backup);
+                    const backupDate = new Date(parsed.timestamp);
+                    const now = new Date();
+                    const diffHours = (now - backupDate) / (1000 * 60 * 60);
+                    
+                    if (diffHours < 24) { // Backup válido por 24 horas
+                        return parsed.data;
+                    }
+                }
+            } catch (error) {
+                console.warn('No se pudo cargar backup de localStorage:', error);
+            }
+            return null;
+        }
+
+        // Detectar cambios y guardar automáticamente
+        let autoSaveTimeout;
+        function autoSave() {
+            clearTimeout(autoSaveTimeout);
+            autoSaveTimeout = setTimeout(() => {
+                guardarBackup();
+                AppState.estadisticas = calcularEstadisticasLocales(AppState.agenda);
+                renderizarEstadisticas();
+            }, 2000);
+        }
+
+        // Interceptar modificaciones para auto-guardar
+        const originalCrearContenido = crearContenido;
+        const originalActualizarContenido = actualizarContenido;
+        const originalEliminarContenido = eliminarContenido;
+
+        crearContenido = async function(...args) {
+            await originalCrearContenido.apply(this, args);
+            autoSave();
+        };
+
+        actualizarContenido = async function(...args) {
+            await originalActualizarContenido.apply(this, args);
+            autoSave();
+        };
+
+        eliminarContenido = async function(...args) {
+            await originalEliminarContenido.apply(this, args);
+            autoSave();
+        };
+
+        // Funciones adicionales de gestión
+        function duplicarContenido(contenidoId) {
+            const contenidoOriginal = buscarContenidoPorId(contenidoId);
+            if (!contenidoOriginal) return;
+
+            const nuevoContenido = {
+                ...contenidoOriginal,
+                id: generarNuevoId(contenidoOriginal.semana),
+                titulo: contenidoOriginal.titulo + ' (Copia)',
+                fechaCreacion: new Date().toISOString(),
+                fechaModificacion: new Date().toISOString()
+            };
+
+            crearContenido(nuevoContenido, contenidoOriginal.semana);
+            renderizarAgenda();
+            mostrarNotificacion('Contenido duplicado exitosamente', 'success');
+        }
+
+        function moverContenido(contenidoId, nuevaSemana) {
+            for (const semana of AppState.agenda.semanas) {
+                const index = semana.contenidos.findIndex(c => c.id === contenidoId);
+                if (index !== -1) {
+                    const contenido = semana.contenidos.splice(index, 1)[0];
+                    const semanaDestino = AppState.agenda.semanas.find(s => s.numero === parseInt(nuevaSemana));
+                    if (semanaDestino) {
+                        contenido.fechaModificacion = new Date().toISOString();
+                        semanaDestino.contenidos.push(contenido);
+                        renderizarAgenda();
+                        mostrarNotificacion('Contenido movido exitosamente', 'success');
+                        autoSave();
+                    }
+                    break;
+                }
+            }
+        }
+
+        function cambiarEstadoMasivo(estado) {
+            const contenidosVisibles = document.querySelectorAll('.content-item:not([style*="display: none"])');
+            let contador = 0;
+
+            contenidosVisibles.forEach(item => {
+                const contenidoId = item.dataset.id;
+                const contenido = buscarContenidoPorId(contenidoId);
+                if (contenido) {
+                    // Buscar en la agenda real
+                    for (const semana of AppState.agenda.semanas) {
+                        const index = semana.contenidos.findIndex(c => c.id === contenidoId);
+                        if (index !== -1) {
+                            semana.contenidos[index].estado = estado;
+                            semana.contenidos[index].fechaModificacion = new Date().toISOString();
+                            contador++;
+                            break;
+                        }
+                    }
+                }
+            });
+
+            if (contador > 0) {
+                renderizarAgenda();
+                renderizarEstadisticas();
+                autoSave();
+                mostrarNotificacion(`${contador} contenidos actualizados a ${estado}`, 'success');
+            }
+        }
+
+        // Funciones de importación/exportación avanzada
+        function importarDatos() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const data = JSON.parse(e.target.result);
+                            if (data.semanas && Array.isArray(data.semanas)) {
+                                if (confirm('¿Estás seguro de que quieres reemplazar toda la agenda actual?')) {
+                                    AppState.agenda = data;
+                                    renderizarAgenda();
+                                    renderizarEstadisticas();
+                                    autoSave();
+                                    mostrarNotificacion('Agenda importada exitosamente', 'success');
+                                }
+                            } else {
+                                mostrarNotificacion('Formato de archivo inválido', 'error');
+                            }
+                        } catch (error) {
+                            mostrarNotificacion('Error al leer el archivo', 'error');
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        }
+
+        // Agregar funciones de administración al toolbar si es necesario
+        function agregarOpcionesAdmin() {
+            const adminPanel = document.createElement('div');
+            adminPanel.className = 'toolbar-row';
+            adminPanel.innerHTML = `
+                <div class="filter-group">
+                    <button class="btn btn-warning" onclick="cambiarEstadoMasivo('en-progreso')">
+                        <i class="fas fa-play"></i> Marcar como En Progreso
+                    </button>
+                    <button class="btn btn-success" onclick="cambiarEstadoMasivo('completado')">
+                        <i class="fas fa-check"></i> Marcar como Completado
+                    </button>
+                    <button class="btn btn-secondary" onclick="importarDatos()">
+                        <i class="fas fa-upload"></i> Importar JSON
+                    </button>
+                </div>
+            `;
+            
+            // Solo agregar si no existe
+            if (!document.querySelector('.admin-panel')) {
+                adminPanel.classList.add('admin-panel');
+                document.getElementById('toolbar').appendChild(adminPanel);
+            }
+        }
+
+        // Inicializar opciones de administración después de cargar
+        setTimeout(() => {
+            if (!AppState.modoPresentacion) {
+                agregarOpcionesAdmin();
+            }
+        }, 1000);
+
+        // Función para restaurar desde backup si es necesario
+        function restaurarDesdeBackup() {
+            const backup = cargarBackup();
+            if (backup && confirm('Se encontró un backup reciente. ¿Quieres restaurarlo?')) {
+                AppState.agenda = backup;
+                renderizarAgenda();
+                renderizarEstadisticas();
+                mostrarNotificacion('Backup restaurado exitosamente', 'success');
+                return true;
+            }
+            return false;
+        }
+
+        // Mejorar la función de carga inicial
+        const originalCargarDatos = cargarDatos;
+        cargarDatos = async function(forzarRecarga = false) {
+            // Intentar restaurar backup primero si no es una recarga forzada
+            if (!forzarRecarga && restaurarDesdeBackup()) {
+                ocultarLoading();
+                return;
+            }
+            
+            // Proceder con carga normal
+            await originalCargarDatos(forzarRecarga);
+        };
+
+        // Función de búsqueda avanzada
+        function busquedaAvanzada(termino) {
+            if (!termino) return;
+
+            const resultados = [];
+            AppState.agenda.semanas.forEach(semana => {
+                semana.contenidos.forEach(contenido => {
+                    const campos = [
+                        contenido.titulo,
+                        contenido.tipo,
+                        contenido.recursos,
+                        contenido.comentarios,
+                        ...(contenido.etiquetas || [])
+                    ].join(' ').toLowerCase();
+
+                    if (campos.includes(termino.toLowerCase())) {
+                        resultados.push({
+                            ...contenido,
+                            semana: semana.numero,
+                            semanaInfo: `${semana.fechas} - ${semana.tema}`
+                        });
+                    }
+                });
+            });
+
+            return resultados;
+        }
+
+        // Validación de formulario mejorada
+        function validarFormulario() {
+            const titulo = document.getElementById('contentTitulo').value.trim();
+            const tipo = document.getElementById('contentTipo').value.trim();
+            const semana = document.getElementById('contentSemana').value;
+
+            if (!titulo) {
+                mostrarNotificacion('El título es obligatorio', 'error');
+                document.getElementById('contentTitulo').focus();
+                return false;
+            }
+
+            if (!tipo) {
+                mostrarNotificacion('El tipo de desarrollo es obligatorio', 'error');
+                document.getElementById('contentTipo').focus();
+                return false;
+            }
+
+            if (!semana) {
+                mostrarNotificacion('Debe seleccionar una semana', 'error');
+                document.getElementById('contentSemana').focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        // Actualizar handleFormSubmit para incluir validación
+        const originalHandleFormSubmit = handleFormSubmit;
+        handleFormSubmit = async function(e) {
+            e.preventDefault();
+            
+            if (!validarFormulario()) {
+                return;
+            }
+            
+            await originalHandleFormSubmit(e);
+        };
+
+        // Función para generar reporte detallado
+        function generarReporte() {
+            const stats = AppState.estadisticas;
+            const fecha = new Date().toLocaleDateString('es-CL');
+            
+            const reporte = {
+                fecha_generacion: fecha,
+                resumen_ejecutivo: {
+                    total_contenidos: stats.total_contenidos,
+                    porcentaje_completado: stats.porcentaje_completado,
+                    contenidos_completados: stats.contenidos_completados,
+                    contenidos_en_progreso: stats.contenidos_en_progreso
+                },
+                distribucion_por_pilar: stats.distribucion_pilares,
+                distribucion_por_estado: stats.distribucion_estados,
+                detalle_por_semana: AppState.agenda.semanas.map(semana => ({
+                    numero: semana.numero,
+                    fechas: semana.fechas,
+                    tema: semana.tema,
+                    total_contenidos: semana.contenidos.length,
+                    completados: semana.contenidos.filter(c => c.estado === 'completado').length,
+                    en_progreso: semana.contenidos.filter(c => c.estado === 'en-progreso').length,
+                    pendientes: semana.contenidos.filter(c => !c.estado || c.estado === 'pendiente').length
+                }))
+            };
+
+            return reporte;
+        }
+
+        // Auto-refresh opcional deshabilitado por defecto para evitar pérdida de cambios
+        // if (CONFIG.AUTO_REFRESH > 0) {
+        //     setInterval(() => {
+        //         if (!AppState.isLoading && !AppState.modoPresentacion) {
+        //             cargarDatos();
+        //         }
+        //     }, CONFIG.AUTO_REFRESH);
+        // }
+
+        console.log('🌱 Agenda FEN Sustentabilidad - Sistema de Gestión Avanzada v3.0 inicializado');
+        console.log('📊 Total de contenidos cargados:', AGENDA_COMPLETA.metadatos.totalContenidos);
+        console.log('🎯 Basado en APL II - Educación Superior Sustentable');
     </script>
 </body>
 </html>
