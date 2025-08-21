@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda FEN Sustentabilidad | Universidad de Chile - Gestión Avanzada</title>
+    <title>Agenda FEN Sustentabilidad | Universidad de Chile - Gestión Avanzada v4.0</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         /* Variables de color FEN */
@@ -373,6 +373,39 @@
             box-shadow: var(--shadow-medium);
         }
 
+        /* Estilo para contenidos excluidos */
+        .content-item[data-estado="no-incluir"] {
+            opacity: 0.6;
+            background: #f8f9fa;
+            border-left-color: #6c757d;
+            filter: grayscale(0.8);
+            position: relative;
+        }
+
+        .content-item[data-estado="no-incluir"]:hover {
+            transform: translateX(2px); /* Menor movimiento */
+            opacity: 0.7;
+        }
+
+        .content-item[data-estado="no-incluir"]::before {
+            content: "🚫";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2em;
+            opacity: 0.5;
+        }
+
+        .content-item[data-estado="no-incluir"] .content-title {
+            color: #6c757d !important;
+            text-decoration: line-through;
+        }
+
+        .content-item[data-estado="no-incluir"] .content-type,
+        .content-item[data-estado="no-incluir"] .content-resources {
+            color: #868e96 !important;
+        }
+
         .content-title {
             font-size: 1.1em;
             font-weight: 600;
@@ -705,7 +738,7 @@
         <header class="header fade-in">
             <h1 id="titulo">Agenda FEN Sustentabilidad</h1>
             <p id="periodo">25 agosto - 19 octubre 2025</p>
-            <div class="subtitle">APL II - Educación Superior Sustentable - Gestión Avanzada</div>
+            <div class="subtitle">APL II - Educación Superior Sustentable - Gestión Avanzada v4.0</div>
         </header>
 
         <!-- Loading -->
@@ -755,6 +788,11 @@
                     <select class="filter-select" id="semanaFilter">
                         <option value="">Todas las semanas</option>
                     </select>
+
+                    <label class="etiqueta-checkbox" style="background: #e9ecef; margin: 0;">
+                        <input type="checkbox" id="mostrarExcluidos" checked> 
+                        <span>Mostrar excluidos</span>
+                    </label>
                 </div>
             </div>
 
@@ -940,7 +978,7 @@
             titulo: "Agenda de Contenidos FEN Sustentabilidad",
             periodo: "25 agosto - 19 octubre 2025",
             descripcion: "Agenda basada en APL II - Educación Superior Sustentable",
-            version: "3.0 - Edición Completa",
+            version: "4.0 - Edición Completa con Gestión de Excluidos",
             fechaCreacion: "2025-08-21T00:00:00Z",
             fechaModificacion: new Date().toISOString(),
             semanas: [
@@ -1611,6 +1649,7 @@
             document.getElementById('estadoFilter').addEventListener('change', aplicarFiltros);
             document.getElementById('pilarFilter').addEventListener('change', aplicarFiltros);
             document.getElementById('semanaFilter').addEventListener('change', aplicarFiltros);
+            document.getElementById('mostrarExcluidos').addEventListener('change', aplicarFiltros);
             
             // Botones
             document.getElementById('addContentBtn').addEventListener('click', () => openModal());
@@ -1642,13 +1681,34 @@
             document.getElementById('deleteBtn').addEventListener('click', handleDelete);
 
             // Etiquetas
-            document.querySelectorAll('.etiqueta-checkbox').forEach(checkbox => {
-                checkbox.addEventListener('click', function() {
-                    const input = this.querySelector('input');
-                    input.checked = !input.checked;
-                    this.classList.toggle('active', input.checked);
-                });
+            document.querySelectorAll('.etiqueta-checkbox input[type="checkbox"]').forEach(checkbox => {
+                if (checkbox.id !== 'mostrarExcluidos') { // Excluir el filtro de mostrar excluidos
+                    checkbox.closest('.etiqueta-checkbox').addEventListener('click', function(e) {
+                        if (e.target === this) {
+                            const input = this.querySelector('input');
+                            input.checked = !input.checked;
+                            this.classList.toggle('active', input.checked);
+                        }
+                    });
+                }
             });
+        }
+
+        // Función para cargar automáticamente la versión más reciente
+        function cargarVersionActual() {
+            const backup = cargarBackup();
+            if (backup) {
+                // Verificar si hay cambios reales comparando timestamps
+                const backupTime = new Date(backup.fechaModificacion || 0);
+                const currentTime = new Date(AGENDA_COMPLETA.fechaModificacion || 0);
+                
+                if (backupTime > currentTime) {
+                    AppState.agenda = backup;
+                    mostrarNotificacion('Datos actualizados automáticamente', 'info');
+                    return true;
+                }
+            }
+            return false;
         }
 
         async function cargarDatos(forzarRecarga = false) {
@@ -1658,7 +1718,17 @@
             mostrarLoading();
 
             try {
-                // Usar datos completos internos en lugar de API
+                // Intentar cargar versión actualizada automáticamente
+                if (!forzarRecarga && cargarVersionActual()) {
+                    ocultarLoading();
+                    AppState.estadisticas = calcularEstadisticasLocales(AppState.agenda);
+                    renderizarHeader();
+                    renderizarEstadisticas();
+                    renderizarAgenda();
+                    return;
+                }
+
+                // Usar datos completos internos
                 AppState.agenda = AGENDA_COMPLETA;
                 AppState.estadisticas = calcularEstadisticasLocales(AGENDA_COMPLETA);
 
@@ -1667,7 +1737,12 @@
                 renderizarAgenda();
                 
                 ocultarLoading();
-                mostrarNotificacion('Agenda cargada correctamente', 'success');
+                
+                if (forzarRecarga) {
+                    mostrarNotificacion('Agenda recargada correctamente', 'success');
+                } else {
+                    mostrarNotificacion('Agenda cargada correctamente', 'success');
+                }
 
             } catch (error) {
                 console.error('Error al cargar datos:', error);
@@ -1681,6 +1756,7 @@
         function calcularEstadisticasLocales(agenda) {
             const totalSemanas = agenda.semanas.length;
             let totalContenidos = 0;
+            let totalContenidosValidos = 0; // Excluye "no-incluir"
             const estadosCont = {
                 'pendiente': 0,
                 'en-progreso': 0,
@@ -1704,36 +1780,49 @@
                 
                 semana.contenidos.forEach(contenido => {
                     const estado = contenido.estado || '';
+                    
+                    // Contar todos los estados
                     if (estado === '') {
                         estadosCont['sin-estado']++;
                     } else {
                         estadosCont[estado] = (estadosCont[estado] || 0) + 1;
                     }
 
-                    const etiquetas = contenido.etiquetas || [];
-                    if (etiquetas.length === 0) {
-                        pilaresCont['sin-etiqueta']++;
-                    } else {
-                        etiquetas.forEach(etiqueta => {
-                            pilaresCont[etiqueta] = (pilaresCont[etiqueta] || 0) + 1;
-                        });
+                    // Contar solo contenidos válidos (excluye "no-incluir")
+                    if (estado !== 'no-incluir') {
+                        totalContenidosValidos++;
+                    }
+
+                    // Contar pilares (solo para contenidos válidos)
+                    if (estado !== 'no-incluir') {
+                        const etiquetas = contenido.etiquetas || [];
+                        if (etiquetas.length === 0) {
+                            pilaresCont['sin-etiqueta']++;
+                        } else {
+                            etiquetas.forEach(etiqueta => {
+                                pilaresCont[etiqueta] = (pilaresCont[etiqueta] || 0) + 1;
+                            });
+                        }
                     }
                 });
             });
 
-            const porcentajeCompletado = totalContenidos > 0 ? 
-                Math.round((estadosCont['completado'] / totalContenidos) * 100) : 0;
+            // Calcular porcentaje solo con contenidos válidos
+            const porcentajeCompletado = totalContenidosValidos > 0 ? 
+                Math.round((estadosCont['completado'] / totalContenidosValidos) * 100) : 0;
 
             return {
                 total_semanas: totalSemanas,
                 total_contenidos: totalContenidos,
+                total_contenidos_validos: totalContenidosValidos,
                 promedio_contenidos_semana: totalSemanas > 0 ? 
-                    Math.round((totalContenidos / totalSemanas) * 10) / 10 : 0,
+                    Math.round((totalContenidosValidos / totalSemanas) * 10) / 10 : 0,
                 distribucion_estados: estadosCont,
                 distribucion_pilares: pilaresCont,
                 porcentaje_completado: porcentajeCompletado,
                 contenidos_completados: estadosCont['completado'],
                 contenidos_en_progreso: estadosCont['en-progreso'],
+                contenidos_excluidos: estadosCont['no-incluir'],
                 fecha_calculo: new Date().toLocaleString('es-CL')
             };
         }
@@ -1758,20 +1847,27 @@
                     <div class="stat-secondary">${AppState.agenda.periodo}</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">${stats.total_contenidos}</div>
-                    <div class="stat-label">Contenidos</div>
+                    <div class="stat-number">${stats.total_contenidos_validos}</div>
+                    <div class="stat-label">Contenidos Activos</div>
                     <div class="stat-secondary">${stats.promedio_contenidos_semana} por semana</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">${stats.contenidos_completados}</div>
                     <div class="stat-label">Completados</div>
-                    <div class="stat-secondary">${stats.porcentaje_completado}% del total</div>
+                    <div class="stat-secondary">${stats.porcentaje_completado}% del total activo</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">${stats.contenidos_en_progreso}</div>
                     <div class="stat-label">En Progreso</div>
                     <div class="stat-secondary">Avance actual</div>
                 </div>
+                ${stats.contenidos_excluidos > 0 ? `
+                <div class="stat-card" style="opacity: 0.7;">
+                    <div class="stat-number" style="color: #6c757d;">${stats.contenidos_excluidos}</div>
+                    <div class="stat-label">Excluidos</div>
+                    <div class="stat-secondary">No incluir en medición</div>
+                </div>
+                ` : ''}
             `;
         }
 
@@ -1815,7 +1911,7 @@
                     <div class="week-stats">
                         <div class="week-stat">
                             <i class="fas fa-tasks"></i>
-                            <span>${semana.contenidos.length} contenidos</span>
+                            <span>${stats.total} contenidos activos</span>
                         </div>
                         <div class="week-stat">
                             <i class="fas fa-check-circle"></i>
@@ -1825,6 +1921,12 @@
                             <i class="fas fa-clock"></i>
                             <span>${stats.enProgreso} en progreso</span>
                         </div>
+                        ${semana.contenidos.length !== stats.total ? `
+                        <div class="week-stat" style="opacity: 0.6;">
+                            <i class="fas fa-ban"></i>
+                            <span>${semana.contenidos.length - stats.total} excluidos</span>
+                        </div>
+                        ` : ''}
                     </div>
                     <i class="fas fa-chevron-down toggle-icon" id="toggle-${semana.numero}"></i>
                 </div>
@@ -2062,15 +2164,22 @@
             AppState.filtros.estado = document.getElementById('estadoFilter').value;
             AppState.filtros.pilar = document.getElementById('pilarFilter').value;
             AppState.filtros.semana = document.getElementById('semanaFilter').value;
+            const mostrarExcluidos = document.getElementById('mostrarExcluidos').checked;
 
             const contenidos = document.querySelectorAll('.content-item');
             let visiblesCount = 0;
 
             contenidos.forEach(item => {
                 let visible = true;
+                const estadoItem = item.dataset.estado || '';
+
+                // Filtro de contenidos excluidos
+                if (!mostrarExcluidos && estadoItem === 'no-incluir') {
+                    visible = false;
+                }
 
                 // Filtro de búsqueda
-                if (AppState.filtros.busqueda) {
+                if (AppState.filtros.busqueda && visible) {
                     const titulo = item.dataset.titulo || '';
                     const tipo = item.dataset.tipo || '';
                     const recursos = item.dataset.recursos || '';
@@ -2082,12 +2191,12 @@
                 }
 
                 // Filtro de estado
-                if (AppState.filtros.estado && item.dataset.estado !== AppState.filtros.estado) {
+                if (AppState.filtros.estado && estadoItem !== AppState.filtros.estado && visible) {
                     visible = false;
                 }
 
                 // Filtro de pilar
-                if (AppState.filtros.pilar && !item.dataset.etiquetas.includes(AppState.filtros.pilar)) {
+                if (AppState.filtros.pilar && !item.dataset.etiquetas.includes(AppState.filtros.pilar) && visible) {
                     visible = false;
                 }
 
@@ -2132,6 +2241,7 @@
             document.getElementById('estadoFilter').value = '';
             document.getElementById('pilarFilter').value = '';
             document.getElementById('semanaFilter').value = '';
+            document.getElementById('mostrarExcluidos').checked = true;
             
             AppState.filtros = {
                 busqueda: '',
@@ -2221,13 +2331,18 @@
         function calcularEstadisticasSemana(semana) {
             let completados = 0;
             let enProgreso = 0;
+            let total = 0;
 
             semana.contenidos.forEach(contenido => {
-                if (contenido.estado === 'completado') completados++;
-                if (contenido.estado === 'en-progreso') enProgreso++;
+                // Solo contar contenidos activos (no excluidos)
+                if (contenido.estado !== 'no-incluir') {
+                    total++;
+                    if (contenido.estado === 'completado') completados++;
+                    if (contenido.estado === 'en-progreso') enProgreso++;
+                }
             });
 
-            return { completados, enProgreso };
+            return { completados, enProgreso, total };
         }
 
         // Funciones de utilidad
@@ -2415,7 +2530,12 @@
                 renderizarAgenda();
                 renderizarEstadisticas();
                 autoSave();
-                mostrarNotificacion(`${contador} contenidos actualizados a ${estado}`, 'success');
+                
+                let mensaje = `${contador} contenidos actualizados a ${estado}`;
+                if (estado === 'no-incluir') {
+                    mensaje += ' (excluidos de la medición)';
+                }
+                mostrarNotificacion(mensaje, 'success');
             }
         }
 
@@ -2464,6 +2584,10 @@
                     <button class="btn btn-success" onclick="cambiarEstadoMasivo('completado')">
                         <i class="fas fa-check"></i> Marcar como Completado
                     </button>
+                    <button class="btn btn-secondary" onclick="cambiarEstadoMasivo('no-incluir')" 
+                            title="Excluir de la medición">
+                        <i class="fas fa-ban"></i> Marcar como Excluido
+                    </button>
                     <button class="btn btn-secondary" onclick="importarDatos()">
                         <i class="fas fa-upload"></i> Importar JSON
                     </button>
@@ -2477,65 +2601,39 @@
             }
         }
 
-        // Inicializar opciones de administración después de cargar
-        setTimeout(() => {
-            if (!AppState.modoPresentacion) {
-                agregarOpcionesAdmin();
-            }
-        }, 1000);
-
-        // Función para restaurar desde backup si es necesario
-        function restaurarDesdeBackup() {
-            const backup = cargarBackup();
-            if (backup && confirm('Se encontró un backup reciente. ¿Quieres restaurarlo?')) {
-                AppState.agenda = backup;
-                renderizarAgenda();
-                renderizarEstadisticas();
-                mostrarNotificacion('Backup restaurado exitosamente', 'success');
-                return true;
-            }
-            return false;
-        }
-
-        // Mejorar la función de carga inicial
-        const originalCargarDatos = cargarDatos;
-        cargarDatos = async function(forzarRecarga = false) {
-            // Intentar restaurar backup primero si no es una recarga forzada
-            if (!forzarRecarga && restaurarDesdeBackup()) {
-                ocultarLoading();
-                return;
-            }
+        // Función para generar reporte detallado
+        function generarReporte() {
+            const stats = AppState.estadisticas;
+            const fecha = new Date().toLocaleDateString('es-CL');
             
-            // Proceder con carga normal
-            await originalCargarDatos(forzarRecarga);
-        };
+            const reporte = {
+                fecha_generacion: fecha,
+                resumen_ejecutivo: {
+                    total_contenidos: stats.total_contenidos,
+                    total_contenidos_validos: stats.total_contenidos_validos,
+                    porcentaje_completado: stats.porcentaje_completado,
+                    contenidos_completados: stats.contenidos_completados,
+                    contenidos_en_progreso: stats.contenidos_en_progreso,
+                    contenidos_excluidos: stats.contenidos_excluidos
+                },
+                distribucion_por_pilar: stats.distribucion_pilares,
+                distribucion_por_estado: stats.distribucion_estados,
+                detalle_por_semana: AppState.agenda.semanas.map(semana => {
+                    const estadisticasSemana = calcularEstadisticasSemana(semana);
+                    return {
+                        numero: semana.numero,
+                        fechas: semana.fechas,
+                        tema: semana.tema,
+                        total_contenidos: semana.contenidos.length,
+                        contenidos_activos: estadisticasSemana.total,
+                        completados: estadisticasSemana.completados,
+                        en_progreso: estadisticasSemana.enProgreso,
+                        excluidos: semana.contenidos.length - estadisticasSemana.total
+                    };
+                })
+            };
 
-        // Función de búsqueda avanzada
-        function busquedaAvanzada(termino) {
-            if (!termino) return;
-
-            const resultados = [];
-            AppState.agenda.semanas.forEach(semana => {
-                semana.contenidos.forEach(contenido => {
-                    const campos = [
-                        contenido.titulo,
-                        contenido.tipo,
-                        contenido.recursos,
-                        contenido.comentarios,
-                        ...(contenido.etiquetas || [])
-                    ].join(' ').toLowerCase();
-
-                    if (campos.includes(termino.toLowerCase())) {
-                        resultados.push({
-                            ...contenido,
-                            semana: semana.numero,
-                            semanaInfo: `${semana.fechas} - ${semana.tema}`
-                        });
-                    }
-                });
-            });
-
-            return resultados;
+            return reporte;
         }
 
         // Validación de formulario mejorada
@@ -2577,47 +2675,50 @@
             await originalHandleFormSubmit(e);
         };
 
-        // Función para generar reporte detallado
-        function generarReporte() {
-            const stats = AppState.estadisticas;
-            const fecha = new Date().toLocaleDateString('es-CL');
-            
-            const reporte = {
-                fecha_generacion: fecha,
-                resumen_ejecutivo: {
-                    total_contenidos: stats.total_contenidos,
-                    porcentaje_completado: stats.porcentaje_completado,
-                    contenidos_completados: stats.contenidos_completados,
-                    contenidos_en_progreso: stats.contenidos_en_progreso
-                },
-                distribucion_por_pilar: stats.distribucion_pilares,
-                distribucion_por_estado: stats.distribucion_estados,
-                detalle_por_semana: AppState.agenda.semanas.map(semana => ({
-                    numero: semana.numero,
-                    fechas: semana.fechas,
-                    tema: semana.tema,
-                    total_contenidos: semana.contenidos.length,
-                    completados: semana.contenidos.filter(c => c.estado === 'completado').length,
-                    en_progreso: semana.contenidos.filter(c => c.estado === 'en-progreso').length,
-                    pendientes: semana.contenidos.filter(c => !c.estado || c.estado === 'pendiente').length
-                }))
-            };
+        // Inicializar opciones de administración después de cargar
+        setTimeout(() => {
+            if (!AppState.modoPresentacion) {
+                agregarOpcionesAdmin();
+            }
+        }, 1000);
 
-            return reporte;
+        // Función de búsqueda avanzada
+        function busquedaAvanzada(termino) {
+            if (!termino) return;
+
+            const resultados = [];
+            AppState.agenda.semanas.forEach(semana => {
+                semana.contenidos.forEach(contenido => {
+                    const campos = [
+                        contenido.titulo,
+                        contenido.tipo,
+                        contenido.recursos,
+                        contenido.comentarios,
+                        ...(contenido.etiquetas || [])
+                    ].join(' ').toLowerCase();
+
+                    if (campos.includes(termino.toLowerCase())) {
+                        resultados.push({
+                            ...contenido,
+                            semana: semana.numero,
+                            semanaInfo: `${semana.fechas} - ${semana.tema}`
+                        });
+                    }
+                });
+            });
+
+            return resultados;
         }
 
-        // Auto-refresh opcional deshabilitado por defecto para evitar pérdida de cambios
-        // if (CONFIG.AUTO_REFRESH > 0) {
-        //     setInterval(() => {
-        //         if (!AppState.isLoading && !AppState.modoPresentacion) {
-        //             cargarDatos();
-        //         }
-        //     }, CONFIG.AUTO_REFRESH);
-        // }
-
-        console.log('🌱 Agenda FEN Sustentabilidad - Sistema de Gestión Avanzada v3.0 inicializado');
+        console.log('🌱 Agenda FEN Sustentabilidad - Sistema de Gestión Avanzada v4.0 inicializado');
         console.log('📊 Total de contenidos cargados:', AGENDA_COMPLETA.metadatos.totalContenidos);
         console.log('🎯 Basado en APL II - Educación Superior Sustentable');
+        console.log('✨ Nuevas funciones Fase 1:');
+        console.log('   • Backup automático sin confirmación');
+        console.log('   • Contenidos "no-incluir" descoloridos');
+        console.log('   • Estadísticas excluyendo contenidos marcados como "no-incluir"');
+        console.log('   • Filtro para mostrar/ocultar contenidos excluidos');
+        console.log('   • Botón de administración para marcar como excluido');
     </script>
 </body>
 </html>

@@ -71,6 +71,9 @@ function handleGet($action) {
         case 'filtrar':
             filtrarContenidos();
             break;
+        case 'reporte':
+            generarReporte();
+            break;
         default:
             sendError('Acción no válida para GET', 400);
     }
@@ -111,6 +114,9 @@ function handlePut($action) {
             break;
         case 'semana':
             actualizarSemana();
+            break;
+        case 'estado-masivo':
+            cambiarEstadoMasivo();
             break;
         default:
             sendError('Acción no válida para PUT', 400);
@@ -171,6 +177,9 @@ function guardarAgenda($agenda) {
     // Crear backup antes de guardar
     crearBackupSilencioso();
     
+    // Actualizar fecha de modificación
+    $agenda['fechaModificacion'] = date('c');
+    
     $jsonData = json_encode($agenda, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     
     if (file_put_contents($jsonFile, $jsonData) === false) {
@@ -203,7 +212,7 @@ function getAgenda() {
 }
 
 /**
- * Obtener estadísticas
+ * Obtener estadísticas mejoradas v4.0
  */
 function getEstadisticas() {
     $resultado = leerAgenda();
@@ -211,17 +220,19 @@ function getEstadisticas() {
     if ($resultado['error']) {
         sendError($resultado['mensaje'], 500);
     } else {
-        $stats = calcularEstadisticas($resultado['data']);
+        $stats = calcularEstadisticasAvanzadas($resultado['data']);
         sendSuccess($stats);
     }
 }
 
 /**
- * Calcular estadísticas detalladas
+ * Calcular estadísticas avanzadas con manejo de excluidos
  */
-function calcularEstadisticas($agenda) {
+function calcularEstadisticasAvanzadas($agenda) {
     $totalSemanas = count($agenda['semanas']);
     $totalContenidos = 0;
+    $totalContenidosValidos = 0; // Excluye "no-incluir"
+    
     $estadosCont = [
         'pendiente' => 0,
         'en-progreso' => 0,
@@ -230,6 +241,7 @@ function calcularEstadisticas($agenda) {
         'no-incluir' => 0,
         'sin-estado' => 0
     ];
+    
     $pilaresCont = [
         'gobernanza' => 0,
         'cultura' => 0,
@@ -240,44 +252,85 @@ function calcularEstadisticas($agenda) {
         'sin-etiqueta' => 0
     ];
     
+    $detallesPorSemana = [];
+
     foreach ($agenda['semanas'] as $semana) {
-        $totalContenidos += count($semana['contenidos']);
+        $contenidosSemana = count($semana['contenidos']);
+        $validosSemana = 0;
+        $completadosSemana = 0;
+        $progresoSemana = 0;
+        $excuidosSemana = 0;
+        
+        $totalContenidos += $contenidosSemana;
         
         foreach ($semana['contenidos'] as $contenido) {
-            // Contar estados
             $estado = $contenido['estado'] ?? '';
+            
+            // Contar todos los estados
             if (empty($estado)) {
                 $estadosCont['sin-estado']++;
             } else {
-                $estadosCont[$estado] = ($estadosCont[$estado] ?? 0) + 1;
+                $estadosCont[$estado]++;
             }
-            
-            // Contar pilares
-            $etiquetas = $contenido['etiquetas'] ?? [];
-            if (empty($etiquetas)) {
-                $pilaresCont['sin-etiqueta']++;
-            } else {
-                foreach ($etiquetas as $etiqueta) {
-                    $pilaresCont[$etiqueta] = ($pilaresCont[$etiqueta] ?? 0) + 1;
+
+            // Contar solo contenidos válidos (excluye "no-incluir")
+            if ($estado !== 'no-incluir') {
+                $totalContenidosValidos++;
+                $validosSemana++;
+                
+                if ($estado === 'completado') $completadosSemana++;
+                if ($estado === 'en-progreso') $progresoSemana++;
+                
+                // Contar pilares solo para contenidos válidos
+                $etiquetas = $contenido['etiquetas'] ?? [];
+                if (empty($etiquetas)) {
+                    $pilaresCont['sin-etiqueta']++;
+                } else {
+                    foreach ($etiquetas as $etiqueta) {
+                        if (isset($pilaresCont[$etiqueta])) {
+                            $pilaresCont[$etiqueta]++;
+                        }
+                    }
                 }
+            } else {
+                $excuidosSemana++;
             }
         }
+        
+        $detallesPorSemana[] = [
+            'numero' => $semana['numero'],
+            'fechas' => $semana['fechas'],
+            'tema' => $semana['tema'],
+            'total_contenidos' => $contenidosSemana,
+            'contenidos_validos' => $validosSemana,
+            'completados' => $completadosSemana,
+            'en_progreso' => $progresoSemana,
+            'excluidos' => $excuidosSemana,
+            'porcentaje_completado' => $validosSemana > 0 ? 
+                round(($completadosSemana / $validosSemana) * 100, 1) : 0
+        ];
     }
-    
-    $porcentajeCompletado = $totalContenidos > 0 ? 
-        round(($estadosCont['completado'] / $totalContenidos) * 100, 1) : 0;
-    
+
+    // Calcular porcentaje solo con contenidos válidos
+    $porcentajeCompletado = $totalContenidosValidos > 0 ? 
+        round(($estadosCont['completado'] / $totalContenidosValidos) * 100, 1) : 0;
+
     return [
+        'version' => '4.0',
         'total_semanas' => $totalSemanas,
         'total_contenidos' => $totalContenidos,
+        'total_contenidos_validos' => $totalContenidosValidos,
         'promedio_contenidos_semana' => $totalSemanas > 0 ? 
-            round($totalContenidos / $totalSemanas, 1) : 0,
+            round($totalContenidosValidos / $totalSemanas, 1) : 0,
         'distribucion_estados' => $estadosCont,
         'distribucion_pilares' => $pilaresCont,
         'porcentaje_completado' => $porcentajeCompletado,
         'contenidos_completados' => $estadosCont['completado'],
         'contenidos_en_progreso' => $estadosCont['en-progreso'],
-        'fecha_calculo' => date('Y-m-d H:i:s')
+        'contenidos_excluidos' => $estadosCont['no-incluir'],
+        'detalles_por_semana' => $detallesPorSemana,
+        'fecha_calculo' => date('Y-m-d H:i:s'),
+        'timestamp' => time()
     ];
 }
 
@@ -325,6 +378,7 @@ function getContenido() {
         foreach ($semana['contenidos'] as $contenido) {
             if ($contenido['id'] === $contenidoId) {
                 $contenidoEncontrado = $contenido;
+                $contenidoEncontrado['semana_numero'] = $semana['numero'];
                 break 2;
             }
         }
@@ -338,14 +392,15 @@ function getContenido() {
 }
 
 /**
- * Filtrar contenidos
+ * Filtrar contenidos con soporte para excluidos
  */
 function filtrarContenidos() {
     $filtros = [
         'busqueda' => $_GET['busqueda'] ?? '',
         'estado' => $_GET['estado'] ?? '',
         'etiqueta' => $_GET['etiqueta'] ?? '',
-        'semana' => $_GET['semana'] ?? ''
+        'semana' => $_GET['semana'] ?? '',
+        'incluir_excluidos' => ($_GET['incluir_excluidos'] ?? 'true') === 'true'
     ];
     
     $resultado = leerAgenda();
@@ -365,8 +420,13 @@ function filtrarContenidos() {
         foreach ($semana['contenidos'] as $contenido) {
             $incluir = true;
             
+            // Filtro de excluidos
+            if (!$filtros['incluir_excluidos'] && ($contenido['estado'] ?? '') === 'no-incluir') {
+                $incluir = false;
+            }
+            
             // Filtro de búsqueda
-            if (!empty($filtros['busqueda'])) {
+            if (!empty($filtros['busqueda']) && $incluir) {
                 $textoBusqueda = strtolower($filtros['busqueda']);
                 $textoContenido = strtolower(
                     ($contenido['titulo'] ?? '') . ' ' .
@@ -408,6 +468,148 @@ function filtrarContenidos() {
         'total' => count($contenidosFiltrados),
         'filtros_aplicados' => $filtros
     ]);
+}
+
+/**
+ * Cambiar estado masivo - Nueva función v4.0
+ */
+function cambiarEstadoMasivo() {
+    $input = json_decode(file_get_contents('php://input'), true);
+    $nuevoEstado = $input['estado'] ?? '';
+    $contenidosIds = $input['contenidos'] ?? [];
+    
+    if (empty($nuevoEstado) || empty($contenidosIds)) {
+        sendError('Estado y contenidos son requeridos', 400);
+        return;
+    }
+    
+    $resultado = leerAgenda();
+    if ($resultado['error']) {
+        sendError($resultado['mensaje'], 500);
+        return;
+    }
+    
+    $agenda = $resultado['data'];
+    $actualizados = 0;
+    
+    foreach ($agenda['semanas'] as &$semana) {
+        foreach ($semana['contenidos'] as &$contenido) {
+            if (in_array($contenido['id'], $contenidosIds)) {
+                $contenido['estado'] = $nuevoEstado;
+                $contenido['fechaModificacion'] = date('c');
+                $actualizados++;
+            }
+        }
+    }
+    
+    if ($actualizados > 0) {
+        $resultadoGuardar = guardarAgenda($agenda);
+        
+        if ($resultadoGuardar['error']) {
+            sendError($resultadoGuardar['mensaje'], 500);
+        } else {
+            registrarCambio('estado_masivo', [
+                'estado' => $nuevoEstado,
+                'cantidad' => $actualizados
+            ]);
+            
+            sendSuccess([
+                'mensaje' => "Se actualizaron $actualizados contenidos a estado: $nuevoEstado",
+                'actualizados' => $actualizados,
+                'estado' => $nuevoEstado
+            ]);
+        }
+    } else {
+        sendError('No se encontraron contenidos para actualizar', 404);
+    }
+}
+
+/**
+ * Generar reporte completo - Nueva función v4.0
+ */
+function generarReporte() {
+    $resultado = leerAgenda();
+    if ($resultado['error']) {
+        sendError($resultado['mensaje'], 500);
+        return;
+    }
+    
+    $stats = calcularEstadisticasAvanzadas($resultado['data']);
+    $agenda = $resultado['data'];
+    
+    $reporte = [
+        'metadata' => [
+            'titulo' => $agenda['titulo'],
+            'periodo' => $agenda['periodo'],
+            'version' => $agenda['version'] ?? '4.0',
+            'fecha_generacion' => date('Y-m-d H:i:s'),
+            'total_semanas' => $stats['total_semanas'],
+            'total_contenidos' => $stats['total_contenidos'],
+            'total_contenidos_validos' => $stats['total_contenidos_validos']
+        ],
+        'resumen_ejecutivo' => [
+            'porcentaje_completado' => $stats['porcentaje_completado'],
+            'contenidos_completados' => $stats['contenidos_completados'],
+            'contenidos_en_progreso' => $stats['contenidos_en_progreso'],
+            'contenidos_excluidos' => $stats['contenidos_excluidos'],
+            'promedio_por_semana' => $stats['promedio_contenidos_semana']
+        ],
+        'distribucion_estados' => $stats['distribucion_estados'],
+        'distribucion_pilares' => $stats['distribucion_pilares'],
+        'analisis_por_semana' => $stats['detalles_por_semana'],
+        'recomendaciones' => generarRecomendaciones($stats)
+    ];
+    
+    sendSuccess($reporte);
+}
+
+/**
+ * Generar recomendaciones basadas en estadísticas
+ */
+function generarRecomendaciones($stats) {
+    $recomendaciones = [];
+    
+    // Analizar progreso general
+    if ($stats['porcentaje_completado'] < 30) {
+        $recomendaciones[] = [
+            'tipo' => 'urgente',
+            'titulo' => 'Progreso Bajo',
+            'descripcion' => 'El porcentaje de completado es menor al 30%. Se recomienda revisar recursos y plazos.',
+            'accion' => 'Revisar contenidos pendientes y asignar responsables'
+        ];
+    } elseif ($stats['porcentaje_completado'] > 80) {
+        $recomendaciones[] = [
+            'tipo' => 'excelente',
+            'titulo' => 'Excelente Progreso',
+            'descripcion' => 'El proyecto mantiene un excelente ritmo de avance.',
+            'accion' => 'Continuar con el plan actual'
+        ];
+    }
+    
+    // Analizar contenidos excluidos
+    if ($stats['contenidos_excluidos'] > 5) {
+        $recomendaciones[] = [
+            'tipo' => 'atencion',
+            'titulo' => 'Muchos Contenidos Excluidos',
+            'descripcion' => "Hay {$stats['contenidos_excluidos']} contenidos marcados como 'no-incluir'. Revisar si es necesario.",
+            'accion' => 'Evaluar la relevancia de los contenidos excluidos'
+        ];
+    }
+    
+    // Analizar distribución por pilares
+    $pilarMinimo = min(array_filter($stats['distribucion_pilares']));
+    $pilarMaximo = max($stats['distribucion_pilares']);
+    
+    if ($pilarMaximo - $pilarMinimo > 10) {
+        $recomendaciones[] = [
+            'tipo' => 'balanceo',
+            'titulo' => 'Desequilibrio en Pilares',
+            'descripcion' => 'Existe una distribución desigual entre los pilares del APL.',
+            'accion' => 'Considerar balancear los contenidos entre todos los pilares'
+        ];
+    }
+    
+    return $recomendaciones;
 }
 
 /**
@@ -483,6 +685,7 @@ function crearContenido() {
     if ($resultadoGuardar['error']) {
         sendError($resultadoGuardar['mensaje'], 500);
     } else {
+        registrarCambio('contenido_creado', $nuevoContenido);
         sendSuccess([
             'mensaje' => 'Contenido creado correctamente',
             'contenido' => $nuevoContenido
@@ -532,6 +735,7 @@ function actualizarContenido() {
     if ($resultadoGuardar['error']) {
         sendError($resultadoGuardar['mensaje'], 500);
     } else {
+        registrarCambio('contenido_actualizado', $input);
         sendSuccess(['mensaje' => 'Contenido actualizado correctamente']);
     }
 }
@@ -554,6 +758,7 @@ function eliminarContenido() {
     foreach ($agenda['semanas'] as &$semana) {
         foreach ($semana['contenidos'] as $index => $contenido) {
             if ($contenido['id'] === $contenidoId) {
+                $contenidoEliminado = $contenido;
                 array_splice($semana['contenidos'], $index, 1);
                 $encontrado = true;
                 break 2;
@@ -571,6 +776,7 @@ function eliminarContenido() {
     if ($resultadoGuardar['error']) {
         sendError($resultadoGuardar['mensaje'], 500);
     } else {
+        registrarCambio('contenido_eliminado', $contenidoEliminado);
         sendSuccess(['mensaje' => 'Contenido eliminado correctamente']);
     }
 }
@@ -591,6 +797,9 @@ function exportarDatos() {
         case 'csv':
             exportarCSV($resultado['data']);
             break;
+        case 'reporte':
+            exportarReporte($resultado['data']);
+            break;
         case 'json':
         default:
             header('Content-Disposition: attachment; filename="agenda-fen-' . date('Y-m-d') . '.json"');
@@ -600,7 +809,7 @@ function exportarDatos() {
 }
 
 /**
- * Exportar a CSV
+ * Exportar a CSV mejorado v4.0
  */
 function exportarCSV($agenda) {
     header('Content-Type: text/csv; charset=utf-8');
@@ -615,7 +824,7 @@ function exportarCSV($agenda) {
     fputcsv($output, [
         'Semana', 'Fechas', 'Tema', 'ID Contenido', 'Título', 'Tipo', 
         'Recursos', 'Estado', 'Etiquetas', 'Comentarios', 'Archivos', 
-        'Fecha Creación', 'Fecha Modificación'
+        'Fecha Creación', 'Fecha Modificación', 'Excluido'
     ]);
     
     // Datos
@@ -635,7 +844,8 @@ function exportarCSV($agenda) {
                 $contenido['comentarios'] ?? '',
                 $contenido['archivos'] ?? '',
                 $contenido['fechaCreacion'] ?? '',
-                $contenido['fechaModificacion'] ?? ''
+                $contenido['fechaModificacion'] ?? '',
+                ($contenido['estado'] ?? '') === 'no-incluir' ? 'SÍ' : 'NO'
             ]);
         }
     }
@@ -673,6 +883,19 @@ function crearBackupSilencioso() {
     $backupFile = $backupDir . "agenda_backup_{$timestamp}.json";
     
     if (copy($jsonFile, $backupFile)) {
+        // Limpiar backups antiguos (mantener solo los últimos 10)
+        $backups = glob($backupDir . 'agenda_backup_*.json');
+        if (count($backups) > 10) {
+            usort($backups, function($a, $b) {
+                return filemtime($a) - filemtime($b);
+            });
+            
+            $aEliminar = array_slice($backups, 0, count($backups) - 10);
+            foreach ($aEliminar as $backup) {
+                unlink($backup);
+            }
+        }
+        
         return [
             'error' => false,
             'mensaje' => 'Backup creado correctamente',
@@ -731,7 +954,9 @@ function generarResumenCambio($accion, $datos) {
         case 'contenido_actualizado':
             return 'Contenido actualizado: ' . ($datos['titulo'] ?? 'Sin título');
         case 'contenido_eliminado':
-            return 'Contenido eliminado';
+            return 'Contenido eliminado: ' . ($datos['titulo'] ?? 'Sin título');
+        case 'estado_masivo':
+            return "Cambio masivo: {$datos['cantidad']} contenidos a estado {$datos['estado']}";
         default:
             return $accion;
     }
@@ -767,7 +992,8 @@ function sendSuccess($data) {
     echo json_encode([
         'success' => true,
         'data' => $data,
-        'timestamp' => date('c')
+        'timestamp' => date('c'),
+        'version' => '4.0'
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 }
 
@@ -780,7 +1006,8 @@ function sendError($mensaje, $codigo = 400) {
         'success' => false,
         'error' => true,
         'mensaje' => $mensaje,
-        'timestamp' => date('c')
+        'timestamp' => date('c'),
+        'version' => '4.0'
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 }
 
