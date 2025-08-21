@@ -1,0 +1,265 @@
+# Agenda FEN Sustentabilidad v4.0 - Configuración Apache
+# Sistema de Gestión Avanzada con Manejo de Excluidos
+# Compatible con hosting compartido (Hostgator)
+
+# ================================
+# CONFIGURACIÓN BÁSICA
+# ================================
+
+# Establecer zona horaria para Chile
+SetEnv TZ America/Santiago
+
+# Establecer codificación UTF-8
+AddDefaultCharset UTF-8
+
+# ================================
+# SEGURIDAD
+# ================================
+
+# Ocultar información del servidor
+ServerSignature Off
+
+# Prevenir acceso directo a archivos de configuración
+<Files ~ "^\.">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Proteger archivos sensibles
+<FilesMatch "\.(ini|log|conf)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Proteger archivos de backup
+<FilesMatch "(\.bak|\.backup|\.old|\.temp)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Prevenir listado de directorios
+Options -Indexes
+
+# Proteger contra inyección de scripts
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+    RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+    RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2}) [OR]
+    RewriteCond %{QUERY_STRING} \.\./\.\./\.\./\.\./\.\./\.\./\.\./\.\./\.\./\.\./ [NC,OR]
+    RewriteCond %{QUERY_STRING} (;|<|>|'|"|\)|%0A|%0D|%22|%27|%3C|%3E|%00) [NC]
+    RewriteRule .* - [F]
+</IfModule>
+
+# ================================
+# OPTIMIZACIÓN DE RENDIMIENTO
+# ================================
+
+# Compresión GZIP
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+</IfModule>
+
+# Caché de navegador
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # HTML files
+    ExpiresByType text/html "access plus 1 hour"
+    
+    # CSS files
+    ExpiresByType text/css "access plus 1 month"
+    
+    # JavaScript files
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    
+    # Images
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 month"
+    
+    # Fonts
+    ExpiresByType font/woff "access plus 1 month"
+    ExpiresByType font/woff2 "access plus 1 month"
+    ExpiresByType application/font-woff "access plus 1 month"
+    ExpiresByType application/font-woff2 "access plus 1 month"
+    
+    # JSON files
+    ExpiresByType application/json "access plus 1 hour"
+    
+    # PDF files
+    ExpiresByType application/pdf "access plus 1 month"
+</IfModule>
+
+# Cache-Control headers
+<IfModule mod_headers.c>
+    # CSS and JS files
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+    
+    # Image files
+    <FilesMatch "\.(png|jpeg|jpg|gif|svg|ico)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+    
+    # HTML files
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "public, max-age=3600"
+    </FilesMatch>
+    
+    # JSON files
+    <FilesMatch "\.json$">
+        Header set Cache-Control "public, max-age=3600"
+    </FilesMatch>
+    
+    # Font files
+    <FilesMatch "\.(woff|woff2|ttf|eot)$">
+        Header set Cache-Control "public, max-age=2592000"
+        Header set Access-Control-Allow-Origin "*"
+    </FilesMatch>
+</IfModule>
+
+# ================================
+# MANEJO DE ERRORES PERSONALIZADO
+# ================================
+
+# Páginas de error personalizadas
+ErrorDocument 404 /agenda-fen/404.html
+ErrorDocument 500 /agenda-fen/500.html
+ErrorDocument 403 /agenda-fen/403.html
+
+# ================================
+# CONFIGURACIÓN ESPECÍFICA AGENDA FEN
+# ================================
+
+# Permitir acceso CORS para API (si es necesario)
+<IfModule mod_headers.c>
+    <FilesMatch "\.php$">
+        Header always set Access-Control-Allow-Origin "*"
+        Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        Header always set Access-Control-Allow-Headers "Content-Type, X-Requested-With"
+    </FilesMatch>
+</IfModule>
+
+# Configuración para archivos JSON de datos
+<FilesMatch "agenda\.json$">
+    <IfModule mod_headers.c>
+        Header set Content-Type "application/json; charset=utf-8"
+    </IfModule>
+</FilesMatch>
+
+# URLs amigables (opcional)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Redirigir a la página principal si se accede al directorio
+    RewriteRule ^$ index.html [L]
+    
+    # Redirigir URLs específicas (opcional)
+    # RewriteRule ^agenda/?$ index.html [L]
+    # RewriteRule ^estadisticas/?$ index.html [L]
+    
+    # Forzar HTTPS (descomentar si tienes SSL)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# ================================
+# LÍMITES DE RECURSOS
+# ================================
+
+# Aumentar límites para el sistema (si el hosting lo permite)
+<IfModule mod_php.c>
+    # Tiempo máximo de ejecución
+    php_value max_execution_time 300
+    
+    # Límite de memoria
+    php_value memory_limit 256M
+    
+    # Tamaño máximo de upload
+    php_value upload_max_filesize 50M
+    php_value post_max_size 50M
+    
+    # Número máximo de archivos
+    php_value max_file_uploads 20
+    
+    # Tiempo de sesión
+    php_value session.gc_maxlifetime 3600
+</IfModule>
+
+# ================================
+# PROTECCIÓN ESPECÍFICA
+# ================================
+
+# Proteger archivos de verificación en producción
+<Files "verificar.php">
+    # Permitir acceso solo desde IPs específicas (descomentar y configurar)
+    # Order deny,allow
+    # Deny from all
+    # Allow from 192.168.1.0/24
+    # Allow from tu.ip.especifica
+    
+    # O proteger con contraseña (descomentar para activar)
+    # AuthType Basic
+    # AuthName "Área Restringida - Verificación Sistema"
+    # AuthUserFile /path/to/.htpasswd
+    # Require valid-user
+</Files>
+
+# Proteger directorio de backups
+<IfModule mod_rewrite.c>
+    RewriteRule ^backups/.*$ - [F,L]
+</IfModule>
+
+# ================================
+# CONFIGURACIÓN DE MIME TYPES
+# ================================
+
+<IfModule mod_mime.c>
+    # JSON
+    AddType application/json .json
+    
+    # Fonts
+    AddType font/woff .woff
+    AddType font/woff2 .woff2
+    AddType application/font-woff .woff
+    AddType application/font-woff2 .woff2
+    
+    # SVG
+    AddType image/svg+xml .svg
+    
+    # WebP
+    AddType image/webp .webp
+</IfModule>
+
+# ================================
+# NOTAS DE CONFIGURACIÓN
+# ================================
+
+# Este archivo está optimizado para:
+# 1. Hosting compartido (Hostgator)
+# 2. Sistema Agenda FEN Sustentabilidad v4.0
+# 3. Máximo rendimiento y seguridad
+# 4. Compatibilidad con funciones avanzadas
+
+# Para activar en producción:
+# 1. Subir este archivo como .htaccess
+# 2. Verificar que mod_rewrite esté habilitado
+# 3. Ajustar rutas según estructura de directorios
+# 4. Descomentar protecciones adicionales según necesidades
+
+# Última actualización: Agosto 2025
+# Versión: 4.0 - Fase 1 Completa
