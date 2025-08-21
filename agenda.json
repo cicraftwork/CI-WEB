@@ -1,0 +1,297 @@
+{
+  "titulo": "Agenda de Contenidos FEN Sustentabilidad",
+  "periodo": "25 agosto - 19 octubre 2025",
+  "semanas": [
+    {
+      "numero": 1,
+      "fechas": "25-30 AGOSTO",
+      "tema": "GOBERNANZA Y SEGUIMIENTO - Fundamentos",
+      "contenidos": [
+        {
+          "titulo": "Política institucional de sustentabilidad",
+          "tipo": "Texto web + infografía",
+          "recursos": "Política UChile existente, adaptación FEN"
+        },
+        {
+          "titulo": "Plan de sustentabilidad institucional FEN",
+          "tipo": "Documento síntesis + cronograma visual",
+          "recursos": "APL compromisos, botón descarga"
+        },
+        {
+          "titulo": "Unidad de sustentabilidad FEN",
+          "tipo": "Bio del responsable + foto + organigrama",
+          "recursos": "Foto Fran + Decano + jefe de Gabinete?, descripción de funciones"
+        },
+        {
+          "titulo": "Comité Local de Sustentabilidad",
+          "tipo": "Perfiles miembros + foto bio + foto grupal",
+          "recursos": "Composición triestamental, roles"
+        },
+        {
+          "titulo": "Memoria de sustentabilidad",
+          "tipo": "Resumen ejecutivo + PDF descargable",
+          "recursos": "Compilación logros, indicadores"
+        },
+        {
+          "titulo": "Política vinculación con el medio sustentable",
+          "tipo": "Adaptación política UChile a web FEN",
+          "recursos": "Política UChile + casos FEN"
+        }
+      ]
+    },
+    {
+      "numero": 2,
+      "fechas": "1-6 SEPTIEMBRE",
+      "tema": "GOBERNANZA Políticas Transversales + CULTURA SUSTENTABLE",
+      "contenidos": [
+        {
+          "titulo": "Política inclusión y diversidad",
+          "tipo": "Adaptación política UChile a web FEN",
+          "recursos": "Definición U Chile"
+        },
+        {
+          "titulo": "Unidad de inclusión y diversidad",
+          "tipo": "Descripción + recursos",
+          "recursos": "Vinculación Responsables FEN"
+        },
+        {
+          "titulo": "Política género y diversidad sexual",
+          "tipo": "Adaptación política UChile a web FEN",
+          "recursos": "Política UChile + OGDIS"
+        },
+        {
+          "titulo": "Unidad encargada género",
+          "tipo": "Descripción + recursos",
+          "recursos": "Vinculación OGDIS-FEN"
+        },
+        {
+          "titulo": "Programa inducción estudiantes",
+          "tipo": "Info + video testimonial",
+          "recursos": "Material inducción FEN existente"
+        },
+        {
+          "titulo": "Capacitación personal no académico",
+          "tipo": "Galería fotos + testimonios",
+          "recursos": "Lista Docentes que participaron"
+        }
+      ]
+    },
+    {
+      "numero": 3,
+      "fechas": "8-13 SEPTIEMBRE",
+      "tema": "CULTURA SUSTENTABLE Programas y Participación + ACADEMIA",
+      "contenidos": [
+        {
+          "titulo": "Campañas sensibilización y estilos de vida",
+          "tipo": "Notas y fotos: RRHH + Escuelas",
+          "recursos": "Vinculación con Escuela y RRHH; información y fotos"
+        },
+        {
+          "titulo": "Instancias participación comunitaria",
+          "tipo": "Nota y fotos: Mercadito, Let's Lunch/Chat / charla inducción funcionarios",
+          "recursos": "Vinculación con Escuela y RRHH; información y fotos"
+        },
+        {
+          "titulo": "Programa buenas prácticas en oficinas a nivel institucional",
+          "tipo": "Texto e imagenes: Programa oficina sustentable + link \"Súmate\"",
+          "recursos": "Material programa existente y formulario (?)"
+        },
+        {
+          "titulo": "Encuesta cultura sustentabilidad",
+          "tipo": "Texto informativo, Resultados + gráficos",
+          "recursos": "Datos encuesta voluntaria anual"
+        },
+        {
+          "titulo": "Curso electivo introductorio de sustentabilidad",
+          "tipo": "PENDIENTE",
+          "recursos": "Revisión contenido actual"
+        }
+      ]
+    },
+    {
+      "numero": 4,
+      "fechas": "15-20 SEPTIEMBRE",
+      "tema": "CULTURA SUSTENTABLE Medición + ACADEMIA",
+      "contenidos": [
+        {
+          "titulo": "Fiestas Patrias Sustentables",
+          "tipo": "Contenido especial + fotos",
+          "recursos": "Celebraciones FEN Sostenibles"
+        },
+        {
+          "titulo": "Programa formación académicos",
+          "tipo": "Foto + Frase docente",
+          "recursos": "Lista Docentes que han realizado el curso"
+        },
+        {
+          "titulo": "Definición investigación sustentable",
+          "tipo": "Marco conceptual UChile-FEN",
+          "recursos": "Adaptación definición UChile"
+        },
+        {
+          "titulo": "Fondo concursable investigación",
+          "tipo": "Bases + convocatoria",
+          "recursos": "Vinculación fondos UChile"
+        },
+        {
+          "titulo": "Difusión científica y transferencia",
+          "tipo": "Catálogo proyectos FEN",
+          "recursos": "Investigaciones sustentables"
+        }
+      ]
+    },
+    {
+      "numero": 5,
+      "fechas": "22-27 SEPTIEMBRE",
+      "tema": "GESTIÓN CAMPUS Recursos Naturales",
+      "contenidos": [
+        {
+          "titulo": "Inventario biodiversidad",
+          "tipo": "Catálogo verde FEN + fotos",
+          "recursos": "Especies campus, jardines"
+        },
+        {
+          "titulo": "Programa cuidado biodiversidad",
+          "tipo": "Plan implementación",
+          "recursos": "Mantenimiento áreas verdes"
+        },
+        {
+          "titulo": "Diagnóstico gestión agua",
+          "tipo": "Informe + metas",
+          "recursos": "Línea base institucional"
+        },
+        {
+          "titulo": "Registro consumo agua",
+          "tipo": "Dashboard + indicadores",
+          "recursos": "Datos mensuales"
+        },
+        {
+          "titulo": "Plan gestión agua",
+          "tipo": "Estrategia + cronograma",
+          "recursos": "Medidas eficiencia"
+        },
+        {
+          "titulo": "Diagnóstico residuos",
+          "tipo": "Clasificación + flujos",
+          "recursos": "Info Residuos"
+        }
+      ]
+    },
+    {
+      "numero": 6,
+      "fechas": "29 SEP - 4 OCTUBRE",
+      "tema": "GESTIÓN CAMPUS Residuos y Energía",
+      "contenidos": [
+        {
+          "titulo": "Plan gestión residuos",
+          "tipo": "Estrategia integral",
+          "recursos": "Valorización y eliminación"
+        },
+        {
+          "titulo": "Programa consumo responsable",
+          "tipo": "Guía + metas",
+          "recursos": "Reducción, reciclaje"
+        },
+        {
+          "titulo": "Compras sustentables",
+          "tipo": "Lineamientos + criterios",
+          "recursos": "información Licitaciones sobre criterios sustentables"
+        },
+        {
+          "titulo": "Diagnóstico energético",
+          "tipo": "Línea base + oportunidades",
+          "recursos": "Usos significativos energía"
+        },
+        {
+          "titulo": "Plan gestión energía",
+          "tipo": "Estrategia + cronograma",
+          "recursos": "info de Eficiencia energética"
+        },
+        {
+          "titulo": "Diagnóstico movilidad",
+          "tipo": "Patrones comunidad",
+          "recursos": "Encuesta origen-destino"
+        }
+      ]
+    },
+    {
+      "numero": 7,
+      "fechas": "6-11 OCTUBRE",
+      "tema": "GESTIÓN CAMPUS Movilidad y Carbono + VINCULACIÓN CON EL MEDIO Y RESPONSABILIDAD SOCIAL",
+      "contenidos": [
+        {
+          "titulo": "Plan movilidad + bicicleteros",
+          "tipo": "texto + fotos Infraestructura sustentable",
+          "recursos": "Info disponible"
+        },
+        {
+          "titulo": "Huella carbono + neutralidad",
+          "tipo": "Medición + plan reducción",
+          "recursos": "HuellaChile, verificación"
+        },
+        {
+          "titulo": "Plan inclusión y diversidad",
+          "tipo": "Estrategia RRHH + estudiantes",
+          "recursos": "info de Colaboradores y escuelas"
+        },
+        {
+          "titulo": "Programa apoyo permanencia estudiantes",
+          "tipo": "Información",
+          "recursos": "Coordinación con Escuelas"
+        },
+        {
+          "titulo": "Plan vinculación con el medio sustentable",
+          "tipo": "Programas territorio",
+          "recursos": "Criterios sustentabilidad"
+        },
+        {
+          "titulo": "Plan género y diversidad sexual",
+          "tipo": "Info (breve texto + link)",
+          "recursos": "Vinculación OGDIS"
+        }
+      ]
+    },
+    {
+      "numero": 8,
+      "fechas": "13-19 OCTUBRE",
+      "tema": "VINCULACIÓN CON EL MEDIO - Consolidación",
+      "contenidos": [
+        {
+          "titulo": "Sello Impacta Sustentable",
+          "tipo": "Nota + fotos",
+          "recursos": "material gráfico e información"
+        },
+        {
+          "titulo": "90 años, 90 árboles",
+          "tipo": "Nota + fotos",
+          "recursos": "material gráfico e información"
+        },
+        {
+          "titulo": "Catastro instalaciones residuos",
+          "tipo": "Mapeo (gráfica?) valorización/eliminación",
+          "recursos": "Coordinación con responsables"
+        },
+        {
+          "titulo": "Implementación oficinas sustentables",
+          "tipo": "Registro 15% oficinas",
+          "recursos": "Programa \"Súmate\" expandido"
+        },
+        {
+          "titulo": "Verificación huella carbono",
+          "tipo": "Proceso HuellaChile",
+          "recursos": "Verificadores certificados"
+        },
+        {
+          "titulo": "Reporte indicadores sustentabilidad",
+          "tipo": "RESIES actualizado",
+          "recursos": "Plataforma Red Campus"
+        },
+        {
+          "titulo": "Consolidación web sustentabilidad",
+          "tipo": "Lanzamiento renovado",
+          "recursos": "Todos los contenidos integrados"
+        }
+      ]
+    }
+  ]
+}
