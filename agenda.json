@@ -1,41 +1,88 @@
 {
   "titulo": "Agenda de Contenidos FEN Sustentabilidad",
   "periodo": "25 agosto - 19 octubre 2025",
+  "descripcion": "Agenda basada en APL II - Educación Superior Sustentable",
+  "version": "2.0",
+  "fechaCreacion": "2025-08-21T00:00:00Z",
+  "fechaModificacion": "2025-08-21T00:00:00Z",
   "semanas": [
     {
       "numero": 1,
       "fechas": "25-30 AGOSTO",
       "tema": "GOBERNANZA Y SEGUIMIENTO - Fundamentos",
+      "descripcion": "Establecimiento de bases institucionales para la sustentabilidad",
       "contenidos": [
         {
+          "id": "1-1",
           "titulo": "Política institucional de sustentabilidad",
           "tipo": "Texto web + infografía",
-          "recursos": "Política UChile existente, adaptación FEN"
+          "recursos": "Política UChile existente, adaptación FEN",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "1-2",
           "titulo": "Plan de sustentabilidad institucional FEN",
           "tipo": "Documento síntesis + cronograma visual",
-          "recursos": "APL compromisos, botón descarga"
+          "recursos": "APL compromisos, botón descarga",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "1-3",
           "titulo": "Unidad de sustentabilidad FEN",
           "tipo": "Bio del responsable + foto + organigrama",
-          "recursos": "Foto Fran + Decano + jefe de Gabinete?, descripción de funciones"
+          "recursos": "Foto Fran + Decano + jefe de Gabinete?, descripción de funciones",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "1-4",
           "titulo": "Comité Local de Sustentabilidad",
           "tipo": "Perfiles miembros + foto bio + foto grupal",
-          "recursos": "Composición triestamental, roles"
+          "recursos": "Composición triestamental, roles",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "1-5",
           "titulo": "Memoria de sustentabilidad",
           "tipo": "Resumen ejecutivo + PDF descargable",
-          "recursos": "Compilación logros, indicadores"
+          "recursos": "Compilación logros, indicadores",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "1-6",
           "titulo": "Política vinculación con el medio sustentable",
           "tipo": "Adaptación política UChile a web FEN",
-          "recursos": "Política UChile + casos FEN"
+          "recursos": "Política UChile + casos FEN",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         }
       ]
     },
@@ -43,36 +90,79 @@
       "numero": 2,
       "fechas": "1-6 SEPTIEMBRE",
       "tema": "GOBERNANZA Políticas Transversales + CULTURA SUSTENTABLE",
+      "descripcion": "Desarrollo de políticas inclusivas y programas de formación",
       "contenidos": [
         {
+          "id": "2-1",
           "titulo": "Política inclusión y diversidad",
           "tipo": "Adaptación política UChile a web FEN",
-          "recursos": "Definición U Chile"
+          "recursos": "Definición U Chile",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "2-2",
           "titulo": "Unidad de inclusión y diversidad",
           "tipo": "Descripción + recursos",
-          "recursos": "Vinculación Responsables FEN"
+          "recursos": "Vinculación Responsables FEN",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "2-3",
           "titulo": "Política género y diversidad sexual",
           "tipo": "Adaptación política UChile a web FEN",
-          "recursos": "Política UChile + OGDIS"
+          "recursos": "Política UChile + OGDIS",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "2-4",
           "titulo": "Unidad encargada género",
           "tipo": "Descripción + recursos",
-          "recursos": "Vinculación OGDIS-FEN"
+          "recursos": "Vinculación OGDIS-FEN",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "2-5",
           "titulo": "Programa inducción estudiantes",
           "tipo": "Info + video testimonial",
-          "recursos": "Material inducción FEN existente"
+          "recursos": "Material inducción FEN existente",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "2-6",
           "titulo": "Capacitación personal no académico",
           "tipo": "Galería fotos + testimonios",
-          "recursos": "Lista Docentes que participaron"
+          "recursos": "Lista Docentes que participaron",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         }
       ]
     },
@@ -80,31 +170,67 @@
       "numero": 3,
       "fechas": "8-13 SEPTIEMBRE",
       "tema": "CULTURA SUSTENTABLE Programas y Participación + ACADEMIA",
+      "descripcion": "Implementación de programas de sensibilización y participación comunitaria",
       "contenidos": [
         {
+          "id": "3-1",
           "titulo": "Campañas sensibilización y estilos de vida",
           "tipo": "Notas y fotos: RRHH + Escuelas",
-          "recursos": "Vinculación con Escuela y RRHH; información y fotos"
+          "recursos": "Vinculación con Escuela y RRHH; información y fotos",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "3-2",
           "titulo": "Instancias participación comunitaria",
           "tipo": "Nota y fotos: Mercadito, Let's Lunch/Chat / charla inducción funcionarios",
-          "recursos": "Vinculación con Escuela y RRHH; información y fotos"
+          "recursos": "Vinculación con Escuela y RRHH; información y fotos",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "3-3",
           "titulo": "Programa buenas prácticas en oficinas a nivel institucional",
           "tipo": "Texto e imagenes: Programa oficina sustentable + link \"Súmate\"",
-          "recursos": "Material programa existente y formulario (?)"
+          "recursos": "Material programa existente y formulario (?)",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "3-4",
           "titulo": "Encuesta cultura sustentabilidad",
           "tipo": "Texto informativo, Resultados + gráficos",
-          "recursos": "Datos encuesta voluntaria anual"
+          "recursos": "Datos encuesta voluntaria anual",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "3-5",
           "titulo": "Curso electivo introductorio de sustentabilidad",
           "tipo": "PENDIENTE",
-          "recursos": "Revisión contenido actual"
+          "recursos": "Revisión contenido actual",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         }
       ]
     },
@@ -112,31 +238,67 @@
       "numero": 4,
       "fechas": "15-20 SEPTIEMBRE",
       "tema": "CULTURA SUSTENTABLE Medición + ACADEMIA",
+      "descripcion": "Celebraciones sustentables y desarrollo académico en sustentabilidad",
       "contenidos": [
         {
+          "id": "4-1",
           "titulo": "Fiestas Patrias Sustentables",
           "tipo": "Contenido especial + fotos",
-          "recursos": "Celebraciones FEN Sostenibles"
+          "recursos": "Celebraciones FEN Sostenibles",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "4-2",
           "titulo": "Programa formación académicos",
           "tipo": "Foto + Frase docente",
-          "recursos": "Lista Docentes que han realizado el curso"
+          "recursos": "Lista Docentes que han realizado el curso",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "4-3",
           "titulo": "Definición investigación sustentable",
           "tipo": "Marco conceptual UChile-FEN",
-          "recursos": "Adaptación definición UChile"
+          "recursos": "Adaptación definición UChile",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "4-4",
           "titulo": "Fondo concursable investigación",
           "tipo": "Bases + convocatoria",
-          "recursos": "Vinculación fondos UChile"
+          "recursos": "Vinculación fondos UChile",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "4-5",
           "titulo": "Difusión científica y transferencia",
           "tipo": "Catálogo proyectos FEN",
-          "recursos": "Investigaciones sustentables"
+          "recursos": "Investigaciones sustentables",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         }
       ]
     },
@@ -144,36 +306,79 @@
       "numero": 5,
       "fechas": "22-27 SEPTIEMBRE",
       "tema": "GESTIÓN CAMPUS Recursos Naturales",
+      "descripcion": "Manejo sostenible de biodiversidad, agua y recursos naturales del campus",
       "contenidos": [
         {
+          "id": "5-1",
           "titulo": "Inventario biodiversidad",
           "tipo": "Catálogo verde FEN + fotos",
-          "recursos": "Especies campus, jardines"
+          "recursos": "Especies campus, jardines",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "5-2",
           "titulo": "Programa cuidado biodiversidad",
           "tipo": "Plan implementación",
-          "recursos": "Mantenimiento áreas verdes"
+          "recursos": "Mantenimiento áreas verdes",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "5-3",
           "titulo": "Diagnóstico gestión agua",
           "tipo": "Informe + metas",
-          "recursos": "Línea base institucional"
+          "recursos": "Línea base institucional",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "5-4",
           "titulo": "Registro consumo agua",
           "tipo": "Dashboard + indicadores",
-          "recursos": "Datos mensuales"
+          "recursos": "Datos mensuales",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "5-5",
           "titulo": "Plan gestión agua",
           "tipo": "Estrategia + cronograma",
-          "recursos": "Medidas eficiencia"
+          "recursos": "Medidas eficiencia",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "5-6",
           "titulo": "Diagnóstico residuos",
           "tipo": "Clasificación + flujos",
-          "recursos": "Info Residuos"
+          "recursos": "Info Residuos",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         }
       ]
     },
@@ -181,36 +386,79 @@
       "numero": 6,
       "fechas": "29 SEP - 4 OCTUBRE",
       "tema": "GESTIÓN CAMPUS Residuos y Energía",
+      "descripcion": "Implementación de sistemas de gestión de residuos y eficiencia energética",
       "contenidos": [
         {
+          "id": "6-1",
           "titulo": "Plan gestión residuos",
           "tipo": "Estrategia integral",
-          "recursos": "Valorización y eliminación"
+          "recursos": "Valorización y eliminación",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "6-2",
           "titulo": "Programa consumo responsable",
           "tipo": "Guía + metas",
-          "recursos": "Reducción, reciclaje"
+          "recursos": "Reducción, reciclaje",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "6-3",
           "titulo": "Compras sustentables",
           "tipo": "Lineamientos + criterios",
-          "recursos": "información Licitaciones sobre criterios sustentables"
+          "recursos": "información Licitaciones sobre criterios sustentables",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "6-4",
           "titulo": "Diagnóstico energético",
           "tipo": "Línea base + oportunidades",
-          "recursos": "Usos significativos energía"
+          "recursos": "Usos significativos energía",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "6-5",
           "titulo": "Plan gestión energía",
           "tipo": "Estrategia + cronograma",
-          "recursos": "info de Eficiencia energética"
+          "recursos": "info de Eficiencia energética",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "6-6",
           "titulo": "Diagnóstico movilidad",
           "tipo": "Patrones comunidad",
-          "recursos": "Encuesta origen-destino"
+          "recursos": "Encuesta origen-destino",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         }
       ]
     },
@@ -218,36 +466,79 @@
       "numero": 7,
       "fechas": "6-11 OCTUBRE",
       "tema": "GESTIÓN CAMPUS Movilidad y Carbono + VINCULACIÓN CON EL MEDIO Y RESPONSABILIDAD SOCIAL",
+      "descripcion": "Infraestructura sustentable y programas de vinculación territorial",
       "contenidos": [
         {
+          "id": "7-1",
           "titulo": "Plan movilidad + bicicleteros",
           "tipo": "texto + fotos Infraestructura sustentable",
-          "recursos": "Info disponible"
+          "recursos": "Info disponible",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "7-2",
           "titulo": "Huella carbono + neutralidad",
           "tipo": "Medición + plan reducción",
-          "recursos": "HuellaChile, verificación"
+          "recursos": "HuellaChile, verificación",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "7-3",
           "titulo": "Plan inclusión y diversidad",
           "tipo": "Estrategia RRHH + estudiantes",
-          "recursos": "info de Colaboradores y escuelas"
+          "recursos": "info de Colaboradores y escuelas",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "7-4",
           "titulo": "Programa apoyo permanencia estudiantes",
           "tipo": "Información",
-          "recursos": "Coordinación con Escuelas"
+          "recursos": "Coordinación con Escuelas",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "7-5",
           "titulo": "Plan vinculación con el medio sustentable",
           "tipo": "Programas territorio",
-          "recursos": "Criterios sustentabilidad"
+          "recursos": "Criterios sustentabilidad",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "7-6",
           "titulo": "Plan género y diversidad sexual",
           "tipo": "Info (breve texto + link)",
-          "recursos": "Vinculación OGDIS"
+          "recursos": "Vinculación OGDIS",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         }
       ]
     },
@@ -255,43 +546,113 @@
       "numero": 8,
       "fechas": "13-19 OCTUBRE",
       "tema": "VINCULACIÓN CON EL MEDIO - Consolidación",
+      "descripcion": "Consolidación final y verificación de compromisos del APL",
       "contenidos": [
         {
+          "id": "8-1",
           "titulo": "Sello Impacta Sustentable",
           "tipo": "Nota + fotos",
-          "recursos": "material gráfico e información"
+          "recursos": "material gráfico e información",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "8-2",
           "titulo": "90 años, 90 árboles",
           "tipo": "Nota + fotos",
-          "recursos": "material gráfico e información"
+          "recursos": "material gráfico e información",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "8-3",
           "titulo": "Catastro instalaciones residuos",
           "tipo": "Mapeo (gráfica?) valorización/eliminación",
-          "recursos": "Coordinación con responsables"
+          "recursos": "Coordinación con responsables",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "8-4",
           "titulo": "Implementación oficinas sustentables",
           "tipo": "Registro 15% oficinas",
-          "recursos": "Programa \"Súmate\" expandido"
+          "recursos": "Programa \"Súmate\" expandido",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "8-5",
           "titulo": "Verificación huella carbono",
           "tipo": "Proceso HuellaChile",
-          "recursos": "Verificadores certificados"
+          "recursos": "Verificadores certificados",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "8-6",
           "titulo": "Reporte indicadores sustentabilidad",
           "tipo": "RESIES actualizado",
-          "recursos": "Plataforma Red Campus"
+          "recursos": "Plataforma Red Campus",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         },
         {
+          "id": "8-7",
           "titulo": "Consolidación web sustentabilidad",
           "tipo": "Lanzamiento renovado",
-          "recursos": "Todos los contenidos integrados"
+          "recursos": "Todos los contenidos integrados",
+          "estado": "",
+          "etiquetas": [],
+          "comentarios": "",
+          "archivos": "",
+          "fechaCreacion": "2025-08-21T00:00:00Z",
+          "fechaModificacion": "2025-08-21T00:00:00Z"
         }
       ]
     }
-  ]
+  ],
+  "metadatos": {
+    "totalSemanas": 8,
+    "totalContenidos": 46,
+    "baseAPL": "APL II - Educación Superior Sustentable",
+    "pilares": [
+      "Gobernanza y Seguimiento",
+      "Cultura Sustentable", 
+      "Academia",
+      "Gestión de Campus",
+      "Vinculación con el Medio",
+      "Responsabilidad Social"
+    ],
+    "estados": [
+      "pendiente",
+      "en-progreso", 
+      "completado",
+      "pausado",
+      "no-incluir"
+    ]
+  }
 }

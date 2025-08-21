@@ -4,7 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda FEN Sustentabilidad | Universidad de Chile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* Variables de color FEN - Basadas en manual de marca */
+        :root {
+            --fen-azul-principal: #1E3A8A;
+            --fen-azul-secundario: #3B82F6;
+            --fen-azul-marino: #0D0E70;
+            --fen-celeste: #CCFFFF;
+            --fen-gris-claro: #F4F4F4;
+            --fen-negro: #333333;
+            --fen-rojo: #EF4338;
+            --fen-blanco: #FFFFFF;
+            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --shadow-heavy: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,47 +28,205 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--fen-negro);
+            background: linear-gradient(135deg, var(--fen-azul-principal) 0%, var(--fen-azul-marino) 100%);
             min-height: 100vh;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
 
+        /* Header Institucional */
         .header {
-            text-align: center;
-            margin-bottom: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
             border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: var(--shadow-heavy);
+            text-align: center;
         }
 
         .header h1 {
-            color: white;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: var(--fen-azul-principal);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
         }
 
         .header p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.2em;
-            font-weight: 300;
+            color: var(--fen-azul-secundario);
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 500;
+            margin-bottom: 10px;
         }
 
+        .header .subtitle {
+            color: var(--fen-negro);
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-medium);
+            display: grid;
+            gap: 20px;
+        }
+
+        .toolbar-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-container {
+            flex: 1;
+            min-width: 280px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 2px solid var(--fen-gris-claro);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--fen-azul-secundario);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--fen-azul-secundario);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 12px 16px;
+            border: 2px solid var(--fen-gris-claro);
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+            min-width: 150px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--fen-azul-secundario);
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--fen-azul-principal);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--fen-azul-marino);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-secondary {
+            background: var(--fen-gris-claro);
+            color: var(--fen-negro);
+        }
+
+        .btn-secondary:hover {
+            background: #e5e5e5;
+        }
+
+        .btn-success {
+            background: #10B981;
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--fen-rojo);
+            color: white;
+        }
+
+        /* Estados de interfaz */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .loading i {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: rgba(239, 67, 56, 0.1);
+            border: 2px solid rgba(239, 67, 56, 0.3);
+            color: var(--fen-rojo);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .error i {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        /* Estadísticas */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .stat-card {
@@ -60,95 +234,133 @@
             border-radius: 15px;
             padding: 25px;
             text-align: center;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow-medium);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
         }
 
         .stat-number {
             font-size: 2.5em;
             font-weight: bold;
-            color: #667eea;
+            color: var(--fen-azul-principal);
             margin-bottom: 10px;
         }
 
         .stat-label {
-            color: #666;
+            color: var(--fen-negro);
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-size: 0.9em;
         }
 
+        .stat-secondary {
+            font-size: 0.8em;
+            color: var(--fen-azul-secundario);
+            margin-top: 5px;
+        }
+
+        /* Tarjetas de semana */
         .week-card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
         .week-card:hover {
             transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
         }
 
         .week-header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, var(--fen-azul-principal), var(--fen-azul-secundario));
             color: white;
-            padding: 25px;
+            padding: 30px;
             cursor: pointer;
             position: relative;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .week-header:hover {
-            background: linear-gradient(135deg, #5a6fd8, #6a4190);
+            background: linear-gradient(135deg, var(--fen-azul-marino), var(--fen-azul-principal));
         }
 
         .week-number {
             position: absolute;
-            top: 15px;
-            right: 25px;
+            top: 25px;
+            right: 30px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 1.1em;
+            font-size: 1.3em;
+            backdrop-filter: blur(10px);
         }
 
         .week-dates {
-            font-size: 1.1em;
+            font-size: 1.2em;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
         }
 
         .week-theme {
-            font-size: 1.3em;
-            font-weight: 300;
-            opacity: 0.9;
+            font-size: 1.4em;
+            font-weight: 400;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .week-stats {
+            display: flex;
+            gap: 25px;
+            font-size: 0.9em;
+            flex-wrap: wrap;
+        }
+
+        .week-stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .toggle-icon {
+            position: absolute;
+            top: 50%;
+            right: 100px;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-icon.rotated {
+            transform: translateY(-50%) rotate(180deg);
         }
 
         .week-content {
-            padding: 0;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease-out, padding 0.3s ease;
+            transition: max-height 0.5s ease-out;
         }
 
         .week-content.expanded {
-            max-height: 2000px;
-            padding: 25px;
+            max-height: 3000px;
+        }
+
+        .content-container {
+            padding: 30px;
         }
 
         .content-grid {
@@ -156,67 +368,91 @@
             gap: 20px;
         }
 
+        /* Tarjetas de contenido */
         .content-item {
-            background: #f8f9fa;
+            background: var(--fen-gris-claro);
             border-radius: 12px;
-            padding: 20px;
-            border-left: 4px solid #667eea;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            padding: 25px;
+            border-left: 4px solid var(--fen-azul-secundario);
+            transition: all 0.3s ease;
+            position: relative;
         }
 
         .content-item:hover {
             transform: translateX(5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-medium);
         }
 
         .content-title {
             font-size: 1.1em;
             font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
+            color: var(--fen-azul-principal);
+            margin-bottom: 10px;
+            line-height: 1.4;
         }
 
         .content-type {
-            color: #667eea;
+            color: var(--fen-azul-secundario);
             font-weight: 500;
             font-size: 0.95em;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
-        .loading {
-            text-align: center;
-            padding: 50px;
-            color: white;
-            font-size: 1.2em;
+        .content-resources {
+            color: var(--fen-negro);
+            font-size: 0.9em;
+            line-height: 1.5;
+            margin-bottom: 15px;
         }
 
-        .error {
-            background: rgba(220, 53, 69, 0.1);
-            border: 1px solid rgba(220, 53, 69, 0.3);
-            color: #dc3545;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 20px;
+        .content-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            font-size: 0.8em;
+            color: var(--fen-azul-secundario);
         }
 
-        .toggle-icon {
-            transition: transform 0.3s ease;
-            display: inline-block;
-            margin-left: 10px;
+        /* Modo presentación */
+        .presentation-mode {
+            background: white;
         }
 
-        .toggle-icon.rotated {
-            transform: rotate(180deg);
+        .presentation-mode .toolbar {
+            display: none;
         }
 
+        .presentation-mode .content-item {
+            background: white;
+            border: 1px solid var(--fen-gris-claro);
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
             }
             
-            .header h1 {
-                font-size: 2em;
+            .header {
+                padding: 25px;
+            }
+            
+            .toolbar {
+                padding: 20px;
+            }
+            
+            .toolbar-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-container {
+                min-width: unset;
+            }
+            
+            .filter-group {
+                justify-content: center;
             }
             
             .stats-grid {
@@ -224,167 +460,683 @@
             }
             
             .week-header {
-                padding: 20px;
+                padding: 25px;
             }
             
             .week-number {
-                width: 35px;
-                height: 35px;
-                font-size: 1em;
+                width: 40px;
+                height: 40px;
+                font-size: 1.1em;
+                right: 20px;
+                top: 20px;
+            }
+            
+            .toggle-icon {
+                right: 70px;
+                font-size: 1.2em;
+            }
+            
+            .content-container {
+                padding: 20px;
+            }
+
+            .week-stats {
+                gap: 15px;
             }
         }
 
+        /* Animaciones */
         .fade-in {
             animation: fadeIn 0.6s ease-in;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .slide-down {
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { 
+                transform: translateY(-10px); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateY(0); 
+                opacity: 1; 
+            }
+        }
+
+        /* Notificaciones */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            animation: slideDown 0.3s ease-out;
+            max-width: 300px;
+        }
+
+        .notification.success {
+            background: #10B981;
+        }
+
+        .notification.error {
+            background: var(--fen-rojo);
+        }
+
+        .notification.info {
+            background: var(--fen-azul-secundario);
+        }
+
+        /* Export dropdown */
+        .export-menu {
+            position: relative;
+        }
+
+        .export-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow-heavy);
+            min-width: 200px;
+            z-index: 100;
+            margin-top: 5px;
+        }
+
+        .export-dropdown.active {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .export-option {
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid var(--fen-gris-claro);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .export-option:last-child {
+            border-bottom: none;
+        }
+
+        .export-option:hover {
+            background: var(--fen-gris-claro);
+        }
+
+        /* Utilidades */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header fade-in">
+        <!-- Header Institucional -->
+        <header class="header fade-in">
             <h1 id="titulo">Cargando...</h1>
             <p id="periodo">Preparando agenda de contenidos</p>
-        </div>
+            <div class="subtitle">Basada en APL II - Educación Superior Sustentable</div>
+        </header>
 
+        <!-- Estados de carga -->
         <div id="loading" class="loading">
-            <p>📅 Cargando agenda de sustentabilidad...</p>
+            <i class="fas fa-calendar-alt"></i>
+            <p>Cargando agenda de sustentabilidad...</p>
         </div>
 
-        <div id="error" class="error" style="display: none;">
-            <p>❌ Error al cargar la agenda. Por favor, intenta nuevamente.</p>
+        <div id="error" class="error hidden">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Error al cargar la agenda</h3>
+            <p>No se pudo cargar la información. Por favor, intenta nuevamente.</p>
+            <button class="btn btn-primary" onclick="location.reload()">
+                <i class="fas fa-redo"></i> Reintentar
+            </button>
         </div>
 
-        <div id="stats" class="stats-grid" style="display: none;"></div>
-        <div id="agenda" class="agenda-container"></div>
+        <!-- Barra de herramientas -->
+        <div class="toolbar hidden" id="toolbar">
+            <div class="toolbar-row">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Buscar contenidos, recursos, temas..." id="searchInput">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                
+                <div class="filter-group">
+                    <select class="filter-select" id="estadoFilter">
+                        <option value="">Todos los estados</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="en-progreso">En progreso</option>
+                        <option value="completado">Completado</option>
+                        <option value="pausado">Pausado</option>
+                        <option value="no-incluir">No incluir</option>
+                    </select>
+
+                    <select class="filter-select" id="pilarFilter">
+                        <option value="">Todos los pilares</option>
+                        <option value="gobernanza">Gobernanza y Seguimiento</option>
+                        <option value="cultura">Cultura Sustentable</option>
+                        <option value="academia">Academia</option>
+                        <option value="campus">Gestión de Campus</option>
+                        <option value="vinculacion">Vinculación con el Medio</option>
+                        <option value="responsabilidad">Responsabilidad Social</option>
+                    </select>
+
+                    <select class="filter-select" id="semanaFilter">
+                        <option value="">Todas las semanas</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="toolbar-row">
+                <div class="filter-group">
+                    <button class="btn btn-secondary" id="clearFilters">
+                        <i class="fas fa-filter"></i> Limpiar filtros
+                    </button>
+
+                    <div class="export-menu">
+                        <button class="btn btn-primary" id="exportBtn">
+                            <i class="fas fa-download"></i> Exportar
+                        </button>
+                        <div class="export-dropdown" id="exportDropdown">
+                            <div class="export-option" data-format="json">
+                                <i class="fas fa-file-code"></i> Exportar JSON
+                            </div>
+                            <div class="export-option" data-format="csv">
+                                <i class="fas fa-file-excel"></i> Exportar Excel/CSV
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary" id="presentationMode">
+                        <i class="fas fa-tv"></i> Modo presentación
+                    </button>
+
+                    <button class="btn btn-success" id="refreshBtn">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats-grid hidden" id="statsGrid">
+            <!-- Se llena dinámicamente -->
+        </div>
+
+        <!-- Contenedor de la agenda -->
+        <div id="agendaContainer">
+            <!-- Se llena dinámicamente -->
+        </div>
     </div>
 
     <script>
-        class AgendaViewer {
-            constructor() {
-                this.agenda = null;
-                this.stats = null;
-                this.init();
-            }
+        // Configuración de la aplicación
+        const CONFIG = {
+            API_BASE: 'api.php',
+            AUTO_REFRESH: 30000, // 30 segundos
+            ANIMATION_DELAY: 100
+        };
 
-            async init() {
-                try {
-                    await this.cargarDatos();
-                    this.renderizarHeader();
-                    this.renderizarEstadisticas();
-                    this.renderizarAgenda();
-                    this.ocultarLoading();
-                } catch (error) {
-                    this.mostrarError();
-                    console.error('Error:', error);
+        // Estado global de la aplicación
+        const AppState = {
+            agenda: null,
+            estadisticas: null,
+            filtros: {
+                busqueda: '',
+                estado: '',
+                pilar: '',
+                semana: ''
+            },
+            modoPresentacion: false,
+            isLoading: false
+        };
+
+        // Inicialización de la aplicación
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        async function initializeApp() {
+            setupEventListeners();
+            await cargarDatos();
+        }
+
+        // Configuración de event listeners
+        function setupEventListeners() {
+            // Filtros
+            document.getElementById('searchInput').addEventListener('input', debounce(aplicarFiltros, 300));
+            document.getElementById('estadoFilter').addEventListener('change', aplicarFiltros);
+            document.getElementById('pilarFilter').addEventListener('change', aplicarFiltros);
+            document.getElementById('semanaFilter').addEventListener('change', aplicarFiltros);
+            
+            // Botones principales
+            document.getElementById('clearFilters').addEventListener('click', limpiarFiltros);
+            document.getElementById('refreshBtn').addEventListener('click', () => cargarDatos(true));
+            document.getElementById('presentationMode').addEventListener('click', togglePresentationMode);
+            
+            // Exportar
+            document.getElementById('exportBtn').addEventListener('click', function() {
+                document.getElementById('exportDropdown').classList.toggle('active');
+            });
+
+            // Cerrar dropdown al hacer click fuera
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.export-menu')) {
+                    document.getElementById('exportDropdown').classList.remove('active');
                 }
-            }
+            });
 
-            async cargarDatos() {
-                // Simulación de carga de datos desde API
-                // En producción, estos datos vendrían de api.php
-                const response = await fetch('agenda.json');
-                if (!response.ok) throw new Error('Error al cargar datos');
-                this.agenda = await response.json();
+            // Opciones de exportación
+            document.querySelectorAll('.export-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const format = this.dataset.format;
+                    exportarDatos(format);
+                    document.getElementById('exportDropdown').classList.remove('active');
+                });
+            });
+        }
+
+        // Carga de datos desde la API
+        async function cargarDatos(forzarRecarga = false) {
+            if (AppState.isLoading && !forzarRecarga) return;
+            
+            AppState.isLoading = true;
+            mostrarLoading();
+
+            try {
+                // Cargar agenda
+                const agendaResponse = await fetch(`${CONFIG.API_BASE}?action=agenda&t=${Date.now()}`);
+                if (!agendaResponse.ok) throw new Error('Error al cargar la agenda');
                 
-                // Calcular estadísticas
-                this.calcularEstadisticas();
-            }
+                const agendaData = await agendaResponse.json();
+                if (!agendaData.success) throw new Error(agendaData.mensaje || 'Error desconocido');
+                
+                AppState.agenda = agendaData.data;
 
-            calcularEstadisticas() {
-                const totalSemanas = this.agenda.semanas.length;
-                let totalContenidos = 0;
-                const categorias = {};
+                // Cargar estadísticas
+                const statsResponse = await fetch(`${CONFIG.API_BASE}?action=estadisticas&t=${Date.now()}`);
+                if (statsResponse.ok) {
+                    const statsData = await statsResponse.json();
+                    if (statsData.success) {
+                        AppState.estadisticas = statsData.data;
+                    }
+                }
 
-                this.agenda.semanas.forEach(semana => {
-                    totalContenidos += semana.contenidos.length;
-                    const categoria = semana.tema.split(' ')[0];
-                    categorias[categoria] = (categorias[categoria] || 0) + semana.contenidos.length;
-                });
+                // Renderizar contenido
+                renderizarHeader();
+                renderizarEstadisticas();
+                renderizarAgenda();
+                
+                ocultarLoading();
+                mostrarNotificacion('Agenda cargada correctamente', 'success');
 
-                this.stats = {
-                    total_semanas: totalSemanas,
-                    total_contenidos: totalContenidos,
-                    promedio_contenidos_semana: Math.round((totalContenidos / totalSemanas) * 10) / 10,
-                    distribucion_categorias: categorias
-                };
-            }
-
-            renderizarHeader() {
-                document.getElementById('titulo').textContent = this.agenda.titulo;
-                document.getElementById('periodo').textContent = this.agenda.periodo;
-            }
-
-            renderizarEstadisticas() {
-                const statsContainer = document.getElementById('stats');
-                statsContainer.innerHTML = `
-                    <div class="stat-card fade-in">
-                        <div class="stat-number">${this.stats.total_semanas}</div>
-                        <div class="stat-label">Semanas</div>
-                    </div>
-                    <div class="stat-card fade-in">
-                        <div class="stat-number">${this.stats.total_contenidos}</div>
-                        <div class="stat-label">Contenidos</div>
-                    </div>
-                    <div class="stat-card fade-in">
-                        <div class="stat-number">${this.stats.promedio_contenidos_semana}</div>
-                        <div class="stat-label">Promedio/Semana</div>
-                    </div>
-                    <div class="stat-card fade-in">
-                        <div class="stat-number">${Object.keys(this.stats.distribucion_categorias).length}</div>
-                        <div class="stat-label">Categorías</div>
-                    </div>
-                `;
-                statsContainer.style.display = 'grid';
-            }
-
-            renderizarAgenda() {
-                const agendaContainer = document.getElementById('agenda');
-                let html = '';
-
-                this.agenda.semanas.forEach((semana, index) => {
-                    html += `
-                        <div class="week-card fade-in" style="animation-delay: ${index * 0.1}s">
-                            <div class="week-header" onclick="this.parentElement.querySelector('.week-content').classList.toggle('expanded'); this.querySelector('.toggle-icon').classList.toggle('rotated');">
-                                <div class="week-number">${semana.numero}</div>
-                                <div class="week-dates">${semana.fechas}</div>
-                                <div class="week-theme">${semana.tema} <span class="toggle-icon">▼</span></div>
-                            </div>
-                            <div class="week-content">
-                                <div class="content-grid">
-                                    ${semana.contenidos.map(contenido => `
-                                        <div class="content-item">
-                                            <div class="content-title">${contenido.titulo}</div>
-                                            <div class="content-type">${contenido.tipo}</div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                agendaContainer.innerHTML = html;
-            }
-
-            ocultarLoading() {
-                document.getElementById('loading').style.display = 'none';
-            }
-
-            mostrarError() {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('error').style.display = 'block';
+            } catch (error) {
+                console.error('Error al cargar datos:', error);
+                mostrarError();
+                mostrarNotificacion('Error al cargar la agenda', 'error');
+            } finally {
+                AppState.isLoading = false;
             }
         }
 
-        // Inicializar la aplicación cuando se carga la página
-        document.addEventListener('DOMContentLoaded', () => {
-            new AgendaViewer();
-        });
+        // Renderizado del header
+        function renderizarHeader() {
+            if (!AppState.agenda) return;
+            
+            document.getElementById('titulo').textContent = AppState.agenda.titulo;
+            document.getElementById('periodo').textContent = AppState.agenda.periodo;
+        }
+
+        // Renderizado de estadísticas
+        function renderizarEstadisticas() {
+            if (!AppState.estadisticas) return;
+
+            const container = document.getElementById('statsGrid');
+            const stats = AppState.estadisticas;
+            
+            container.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${stats.total_semanas}</div>
+                    <div class="stat-label">Semanas</div>
+                    <div class="stat-secondary">${AppState.agenda.periodo}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.total_contenidos}</div>
+                    <div class="stat-label">Contenidos</div>
+                    <div class="stat-secondary">${stats.promedio_contenidos_semana} por semana</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.contenidos_completados}</div>
+                    <div class="stat-label">Completados</div>
+                    <div class="stat-secondary">${stats.porcentaje_completado}% del total</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.contenidos_en_progreso}</div>
+                    <div class="stat-label">En Progreso</div>
+                    <div class="stat-secondary">Avance actual</div>
+                </div>
+            `;
+        }
+
+        // Renderizado de la agenda
+        function renderizarAgenda() {
+            if (!AppState.agenda) return;
+
+            const container = document.getElementById('agendaContainer');
+            const semanaFilter = document.getElementById('semanaFilter');
+            
+            // Actualizar filtro de semanas
+            semanaFilter.innerHTML = '<option value="">Todas las semanas</option>';
+            AppState.agenda.semanas.forEach(semana => {
+                const option = document.createElement('option');
+                option.value = semana.numero;
+                option.textContent = `Semana ${semana.numero} - ${semana.fechas}`;
+                semanaFilter.appendChild(option);
+            });
+
+            // Renderizar semanas
+            container.innerHTML = '';
+            AppState.agenda.semanas.forEach((semana, index) => {
+                const semanaElement = crearTarjetaSemana(semana, index);
+                container.appendChild(semanaElement);
+            });
+
+            // Aplicar filtros si existen
+            aplicarFiltros();
+        }
+
+        // Crear tarjeta de semana
+        function crearTarjetaSemana(semana, index) {
+            const semanaDiv = document.createElement('div');
+            semanaDiv.className = 'week-card fade-in';
+            semanaDiv.style.animationDelay = `${index * CONFIG.ANIMATION_DELAY}ms`;
+
+            const stats = calcularEstadisticasSemana(semana);
+
+            semanaDiv.innerHTML = `
+                <div class="week-header" onclick="toggleSemana(${semana.numero})">
+                    <div class="week-number">${semana.numero}</div>
+                    <div class="week-dates">${semana.fechas}</div>
+                    <div class="week-theme">${semana.tema}</div>
+                    <div class="week-stats">
+                        <div class="week-stat">
+                            <i class="fas fa-tasks"></i>
+                            <span>${semana.contenidos.length} contenidos</span>
+                        </div>
+                        <div class="week-stat">
+                            <i class="fas fa-check-circle"></i>
+                            <span>${stats.completados} completados</span>
+                        </div>
+                        <div class="week-stat">
+                            <i class="fas fa-clock"></i>
+                            <span>${stats.enProgreso} en progreso</span>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon" id="toggle-${semana.numero}"></i>
+                </div>
+                <div class="week-content" id="week-content-${semana.numero}">
+                    <div class="content-container">
+                        <div class="content-grid">
+                            ${semana.contenidos.map(contenido => crearTarjetaContenido(contenido)).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return semanaDiv;
+        }
+
+        // Crear tarjeta de contenido
+        function crearTarjetaContenido(contenido) {
+            return `
+                <div class="content-item" data-id="${contenido.id}" data-titulo="${contenido.titulo.toLowerCase()}" data-tipo="${contenido.tipo.toLowerCase()}" data-recursos="${contenido.recursos.toLowerCase()}" data-estado="${contenido.estado || ''}" data-etiquetas="${(contenido.etiquetas || []).join(' ')}">
+                    <div class="content-title">${contenido.titulo}</div>
+                    <div class="content-type">
+                        <i class="fas fa-cog"></i> ${contenido.tipo}
+                    </div>
+                    <div class="content-resources">
+                        <i class="fas fa-box"></i> ${contenido.recursos}
+                    </div>
+                    <div class="content-meta">
+                        <span>
+                            <i class="fas fa-tag"></i> ID: ${contenido.id}
+                        </span>
+                        ${contenido.fechaModificacion ? `
+                            <span>
+                                <i class="fas fa-clock"></i> 
+                                ${new Date(contenido.fechaModificacion).toLocaleDateString('es-CL')}
+                            </span>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Toggle de semana
+        function toggleSemana(numeroSemana) {
+            const content = document.getElementById(`week-content-${numeroSemana}`);
+            const icon = document.getElementById(`toggle-${numeroSemana}`);
+            
+            content.classList.toggle('expanded');
+            icon.classList.toggle('rotated');
+        }
+
+        // Aplicar filtros
+        function aplicarFiltros() {
+            // Obtener valores de filtros
+            AppState.filtros.busqueda = document.getElementById('searchInput').value.toLowerCase();
+            AppState.filtros.estado = document.getElementById('estadoFilter').value;
+            AppState.filtros.pilar = document.getElementById('pilarFilter').value;
+            AppState.filtros.semana = document.getElementById('semanaFilter').value;
+
+            // Filtrar contenidos
+            const contenidos = document.querySelectorAll('.content-item');
+            let visiblesCount = 0;
+
+            contenidos.forEach(item => {
+                let visible = true;
+
+                // Filtro de búsqueda
+                if (AppState.filtros.busqueda) {
+                    const titulo = item.dataset.titulo || '';
+                    const tipo = item.dataset.tipo || '';
+                    const recursos = item.dataset.recursos || '';
+                    const textoCompleto = titulo + ' ' + tipo + ' ' + recursos;
+                    
+                    if (!textoCompleto.includes(AppState.filtros.busqueda)) {
+                        visible = false;
+                    }
+                }
+
+                // Filtro de estado
+                if (AppState.filtros.estado && item.dataset.estado !== AppState.filtros.estado) {
+                    visible = false;
+                }
+
+                // Filtro de pilar
+                if (AppState.filtros.pilar && !item.dataset.etiquetas.includes(AppState.filtros.pilar)) {
+                    visible = false;
+                }
+
+                item.style.display = visible ? 'block' : 'none';
+                if (visible) visiblesCount++;
+            });
+
+            // Filtro de semana
+            const semanas = document.querySelectorAll('.week-card');
+            semanas.forEach(semana => {
+                if (AppState.filtros.semana) {
+                    const numeroSemana = semana.querySelector('.week-number').textContent;
+                    semana.style.display = numeroSemana === AppState.filtros.semana ? 'block' : 'none';
+                } else {
+                    semana.style.display = 'block';
+                }
+            });
+
+            // Mostrar mensaje si no hay resultados
+            mostrarMensajeFiltros(visiblesCount);
+        }
+
+        // Mostrar mensaje de filtros
+        function mostrarMensajeFiltros(count) {
+            const container = document.getElementById('agendaContainer');
+            let mensaje = container.querySelector('.filter-message');
+            
+            if (mensaje) mensaje.remove();
+
+            if (count === 0) {
+                mensaje = document.createElement('div');
+                mensaje.className = 'error filter-message';
+                mensaje.innerHTML = `
+                    <i class="fas fa-search"></i>
+                    <h3>No se encontraron resultados</h3>
+                    <p>Intenta ajustar los filtros para ver más contenidos.</p>
+                `;
+                container.appendChild(mensaje);
+            }
+        }
+
+        // Limpiar filtros
+        function limpiarFiltros() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('estadoFilter').value = '';
+            document.getElementById('pilarFilter').value = '';
+            document.getElementById('semanaFilter').value = '';
+            
+            AppState.filtros = {
+                busqueda: '',
+                estado: '',
+                pilar: '',
+                semana: ''
+            };
+            
+            aplicarFiltros();
+            mostrarNotificacion('Filtros limpiados', 'info');
+        }
+
+        // Toggle modo presentación
+        function togglePresentationMode() {
+            AppState.modoPresentacion = !AppState.modoPresentacion;
+            document.body.classList.toggle('presentation-mode');
+            
+            const btn = document.getElementById('presentationMode');
+            btn.innerHTML = AppState.modoPresentacion ? 
+                '<i class="fas fa-edit"></i> Modo edición' : 
+                '<i class="fas fa-tv"></i> Modo presentación';
+        }
+
+        // Exportar datos
+        async function exportarDatos(formato) {
+            try {
+                const url = `${CONFIG.API_BASE}?action=exportar&formato=${formato}&t=${Date.now()}`;
+                
+                // Crear link temporal para descarga
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `agenda-fen-${new Date().toISOString().split('T')[0]}.${formato}`;
+                link.click();
+                
+                mostrarNotificacion(`Exportando en formato ${formato.toUpperCase()}`, 'info');
+            } catch (error) {
+                console.error('Error al exportar:', error);
+                mostrarNotificacion('Error al exportar los datos', 'error');
+            }
+        }
+
+        // Calcular estadísticas de semana
+        function calcularEstadisticasSemana(semana) {
+            let completados = 0;
+            let enProgreso = 0;
+
+            semana.contenidos.forEach(contenido => {
+                if (contenido.estado === 'completado') completados++;
+                if (contenido.estado === 'en-progreso') enProgreso++;
+            });
+
+            return { completados, enProgreso };
+        }
+
+        // Funciones de utilidad
+        function mostrarLoading() {
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('error').classList.add('hidden');
+            document.getElementById('toolbar').classList.add('hidden');
+            document.getElementById('statsGrid').classList.add('hidden');
+        }
+
+        function ocultarLoading() {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('toolbar').classList.remove('hidden');
+            document.getElementById('statsGrid').classList.remove('hidden');
+        }
+
+        function mostrarError() {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('error').classList.remove('hidden');
+            document.getElementById('toolbar').classList.add('hidden');
+            document.getElementById('statsGrid').classList.add('hidden');
+        }
+
+        function mostrarNotificacion(mensaje, tipo = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${tipo}`;
+            notification.textContent = mensaje;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 4000);
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Auto-refresh (opcional)
+        if (CONFIG.AUTO_REFRESH > 0) {
+            setInterval(() => {
+                if (!AppState.isLoading && !AppState.modoPresentacion) {
+                    cargarDatos();
+                }
+            }, CONFIG.AUTO_REFRESH);
+        }
     </script>
 </body>
 </html>
